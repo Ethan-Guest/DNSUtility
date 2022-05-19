@@ -1,0 +1,2 @@
+# DNSUtility
+DNS benchmark tool
