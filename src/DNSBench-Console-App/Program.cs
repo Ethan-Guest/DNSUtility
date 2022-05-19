@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using DNSBench_Console_App;
+using DNSUtility.Service.Parsers;
 
 namespace MyApp;
 // Note: actual namespace depends on the project name.
@@ -13,6 +14,10 @@ internal class Program
 
     public static void MainLoop()
     {
+        // Test parser
+        var parser = new NameserverCsvParser();
+        var results = parser.Parse("https://public-dns.info/nameservers.csv");
+
         //currentUser.Initialize();
         Console.WriteLine("Welcome to DNS Bench!");
 

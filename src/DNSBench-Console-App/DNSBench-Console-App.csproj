@@ -14,4 +14,8 @@
         <None Remove=".dockerignore"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\DNSUtility.Service\DNSUtility.Service.csproj"/>
+    </ItemGroup>
+
 </Project>
