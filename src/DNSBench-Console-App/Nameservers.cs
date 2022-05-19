@@ -52,7 +52,7 @@ public class Nameservers
     // Display the results of the nameserver test
     public void DisplayResults()
     {
-        Console.WriteLine($"Host:{spaces.Remove(0, 6)} Address: {spaces.Remove(0, 9)}Ping:");
+        Console.WriteLine($"Host:{spaces.Remove(0, 6)} Address: {spaces.Remove(0, 9)}Average Ping:");
         foreach (var dnsAddress in DnsExamples)
             Console.WriteLine(
                 $"{dnsAddress.Key.providerName}{spaces.Remove(0, dnsAddress.Key.providerName.Length)}{dnsAddress.Key.providerAddress}{spaces.Remove(0, dnsAddress.Key.providerAddress.Length)}{dnsAddress.Value / TESTSTORUN}ms");
