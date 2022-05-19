@@ -14,10 +14,6 @@ internal class Program
 
     public static void MainLoop()
     {
-        // Test parser
-        var parser = new NameserverCsvParser();
-        var results = parser.Parse("https://public-dns.info/nameservers.csv");
-
         //currentUser.Initialize();
         Console.WriteLine("Welcome to DNS Bench!");
 
@@ -45,6 +41,11 @@ internal class Program
         // Run DNS benchmark
         else if (input == "2")
         {
+            var parser = new NameserverCsvParser();
+            var results = parser.Parse("https://public-dns.info/nameservers.csv")
+                .Where(n => n.Country == "US" && n.Dnssec)
+                .ToList();
+
             // Instantiate the nameserver class
             var nameservers = new Nameservers();
 
@@ -53,18 +54,18 @@ internal class Program
             // Run tests
             for (var i = 0; i < nameservers.TESTSTORUN; i++)
             {
-                Console.WriteLine("[RUNNING TEST...]");
+                Console.WriteLine($"[RUNNING TEST ON {results.Count} NAMESERVERS");
                 Console.WriteLine(
                     $"Host:{Nameservers.spaces.Remove(0, 6)} Address: {Nameservers.spaces.Remove(0, 9)}Ping:");
 
-                nameservers.RunPingTest();
+                nameservers.RunPingTest(results);
                 Thread.Sleep(100);
                 Console.Clear();
             }
 
             Console.WriteLine("[TEST COMPLETE]");
 
-            nameservers.DisplayResults();
+            nameservers.DisplayResults(results);
 
 
             Console.WriteLine("Press any key to continue...");

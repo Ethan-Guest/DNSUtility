@@ -11,4 +11,6 @@ public class Nameserver
     [Name("country_code")] public string Country { get; set; }
 
     [Name("dnssec")] public bool Dnssec { get; set; }
+
+    [Ignore] public long TotalPing { get; set; }
 }
