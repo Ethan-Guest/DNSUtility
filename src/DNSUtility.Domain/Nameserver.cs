@@ -12,5 +12,7 @@ public class Nameserver
 
     [Name("dnssec")] public bool Dnssec { get; set; }
 
+    [Name("reliability")] public decimal Reliability { get; set; }
+
     [Ignore] public long TotalPing { get; set; }
 }

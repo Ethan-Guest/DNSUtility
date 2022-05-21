@@ -22,7 +22,7 @@ public class Nameservers
         };*/
 
 
-    public int TESTSTORUN = 3;
+    public int TESTSTORUN = 1;
 
 
     public async Task RunPingTest(List<Nameserver> nameservers)
@@ -30,29 +30,29 @@ public class Nameservers
         // list of strings to storing results
         var results = new List<string>();
 
-        var threadPool = new List<Task>();
+        /*var threadPool = new List<Task>();*/
 
         // Loop through 
         foreach (var nameserver in nameservers)
         {
-            threadPool.Add(Task.Run(() =>
-            {
-                // Create ping sender
-                var pingSender = new Ping();
+            /*threadPool.Add(Task.Run(() =>
+            {*/
+            // Create ping sender
+            var pingSender = new Ping();
 
-                // Ping the server
-                var reply = pingSender.Send(nameserver.IpAddress, 200);
+            // Ping the server
+            var reply = pingSender.Send(nameserver.IpAddress, 200);
 
-                // Add to the roundtrip time for the current nameserver
-                nameserver.TotalPing += reply.RoundtripTime;
+            // Add to the roundtrip time for the current nameserver
+            nameserver.TotalPing += reply.RoundtripTime;
 
 
-                results.Add(
-                    $"{nameserver.Name}{nameserver.IpAddress} {reply.RoundtripTime}ms");
-            }));
+            results.Add(
+                $"{nameserver.Name}{nameserver.IpAddress} {reply.RoundtripTime}ms");
+            /*}));*/
         }
 
-        await Task.WhenAll(threadPool);
+        //await Task.WhenAll(threadPool);
 
         for (var i = 0; i < results.Count; i++) Console.WriteLine(results[i]);
     }

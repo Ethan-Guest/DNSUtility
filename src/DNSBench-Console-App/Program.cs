@@ -8,13 +8,13 @@ namespace MyApp;
 
 internal class Program
 {
+    public static bool exitConditon;
+
     // User
     private static readonly User currentUser = new();
 
-
     public static void MainLoop()
     {
-        //currentUser.Initialize();
         Console.WriteLine("Welcome to DNS Bench!");
 
         Console.WriteLine("What operation would you like to perform?");
@@ -43,7 +43,7 @@ internal class Program
         {
             var parser = new NameserverCsvParser();
             var results = parser.Parse("https://public-dns.info/nameservers.csv")
-                .Where(n => n.Country == "US" && n.Dnssec)
+                .Where(n => n.Country == "US" && n.Dnssec && n.Reliability == 1)
                 .ToList();
 
             // Instantiate the nameserver class
@@ -81,16 +81,15 @@ internal class Program
         }
         else if (input == "4")
         {
+            exitConditon = true;
             return;
         }
 
         Console.Clear();
     }
 
-
     private static void Main(string[] args)
     {
-        var exitConditon = false;
-        while (exitConditon != true) MainLoop();
+        while (!exitConditon) MainLoop();
     }
 }
