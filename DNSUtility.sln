@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNSUtility.Ui", "src\DNSUtility.Ui\DNSUtility.Ui.csproj", "{C4EE9EEA-DA31-4C8F-B16A-653EDA9029A8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNSBench-Console-App", "src\DNSBench-Console-App\DNSBench-Console-App.csproj", "{07937C28-68D7-4986-8D8E-52A1F8885F60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNSUtility.Domain", "src\DNSUtility.Domain\DNSUtility.Domain.csproj", "{9C62352A-E456-43C7-90A9-29F8A977297E}"
@@ -14,10 +12,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4EE9EEA-DA31-4C8F-B16A-653EDA9029A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4EE9EEA-DA31-4C8F-B16A-653EDA9029A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4EE9EEA-DA31-4C8F-B16A-653EDA9029A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4EE9EEA-DA31-4C8F-B16A-653EDA9029A8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07937C28-68D7-4986-8D8E-52A1F8885F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07937C28-68D7-4986-8D8E-52A1F8885F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07937C28-68D7-4986-8D8E-52A1F8885F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
