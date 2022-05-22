@@ -4,8 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DNSUtility.Ui.Views.NameserverListView">
-    <DockPanel>
-        <ListBox DockPanel.Dock="Top" Margin="50" Items="{Binding Nameservers}">
+
+    <DockPanel Margin="25">
+        <Grid DockPanel.Dock="Top" Height="200">
+            <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="IPAddress" Binding="{Binding IpAddress}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+
+    <!--
+        <DockPanel>
+        
+                ~1~
+        <ListBox DockPanel.Dock="Top" Height="200" Margin="50" Items="{Binding Nameservers}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
@@ -16,13 +31,18 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        @1@
+                <Grid DockPanel.Dock="Top" Height="200">
+                        <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}" >
+                        </DataGrid>
+                </Grid>
+        
 
 
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Margin="10,0">Run DNS Test</Button>
-            <Button Margin="10,0">Apply DNS</Button>
-            <Button Margin="10,0">Settings</Button>
-        </StackPanel>
-    </DockPanel>
-
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="10,0">Run DNS Test</Button>
+                        <Button Margin="10,0">Apply DNS</Button>
+                        <Button Margin="10,0">Settings</Button>
+                </StackPanel>
+        </DockPanel>-->
 </UserControl>
