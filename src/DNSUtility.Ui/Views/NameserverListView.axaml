@@ -5,44 +5,23 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DNSUtility.Ui.Views.NameserverListView">
 
-    <DockPanel Margin="25">
-        <Grid DockPanel.Dock="Top" Height="200">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" Height="600" Margin="25" ShowGridLines="True">
             <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="IPAddress" Binding="{Binding IpAddress}" />
+                    <DataGridTextColumn MaxWidth="150" Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn MaxWidth="150" Header="Country" Binding="{Binding Country}" />
+                    <DataGridTextColumn MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}" />
+                    <DataGridTextColumn MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
+
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="10,0">Run DNS Test</Button>
+            <Button Margin="10,0">Apply DNS</Button>
+            <Button Margin="10,0">Settings</Button>
+        </StackPanel>
     </DockPanel>
-
-    <!--
-        <DockPanel>
-        
-                ~1~
-        <ListBox DockPanel.Dock="Top" Height="200" Margin="50" Items="{Binding Nameservers}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel>
-                        <TextBlock Text="{Binding Name}" />
-                        <TextBlock Text="{Binding IpAddress}" />
-                        <TextBlock Text="{Binding TotalPing}" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        @1@
-                <Grid DockPanel.Dock="Top" Height="200">
-                        <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}" >
-                        </DataGrid>
-                </Grid>
-        
-
-
-                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Margin="10,0">Run DNS Test</Button>
-                        <Button Margin="10,0">Apply DNS</Button>
-                        <Button Margin="10,0">Settings</Button>
-                </StackPanel>
-        </DockPanel>-->
 </UserControl>
