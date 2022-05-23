@@ -23,6 +23,8 @@ public class NameserverCsvParser : IParser
 
         // Convert CSV to list of Nameserver using CsvHelper
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-        return csv.GetRecords<Nameserver>().ToList();
+        return csv.GetRecords<Nameserver>().ToList().Where(n =>
+            !string.IsNullOrEmpty(n.Country) && !string.IsNullOrEmpty(n.Name) && !string.IsNullOrEmpty(n.IpAddress) &&
+            n.Country == "ZA");
     }
 }

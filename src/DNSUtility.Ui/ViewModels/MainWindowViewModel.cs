@@ -8,7 +8,7 @@ public class MainWindowViewModel : ViewModelBase
 {
     private ViewModelBase content;
 
-    public MainWindowViewModel(NameserverCsvParser parser)
+    public MainWindowViewModel(IParser parser)
     {
         Content = List = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList());
     }
