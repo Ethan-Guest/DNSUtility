@@ -24,9 +24,5 @@ public class User
                 if (dnsServers.Count > 0) primaryDNS = dnsServers[0].ToString();
                 if (dnsServers.Count > 1) secondaryDNS = dnsServers[1].ToString();
             }
-
-        // Initialize the users primary DNS
-        //this.primaryDNS = 
-        // Initialize the users secondary DNS
     }
 }

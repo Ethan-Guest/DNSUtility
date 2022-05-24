@@ -30,13 +30,9 @@ public class Nameservers
         // list of strings to storing results
         var results = new List<string>();
 
-        /*var threadPool = new List<Task>();*/
-
-        // Loop through 
+        // Loop through nameservers
         foreach (var nameserver in nameservers)
         {
-            /*threadPool.Add(Task.Run(() =>
-            {*/
             // Create ping sender
             var pingSender = new Ping();
 
@@ -44,15 +40,13 @@ public class Nameservers
             var reply = pingSender.Send(nameserver.IpAddress, 200);
 
             // Add to the roundtrip time for the current nameserver
-            nameserver.TotalPing += reply.RoundtripTime;
+            //nameserver.TotalPing += reply.RoundtripTime;
 
 
             results.Add(
                 $"{nameserver.Name}{nameserver.IpAddress} {reply.RoundtripTime}ms");
-            /*}));*/
         }
 
-        //await Task.WhenAll(threadPool);
 
         for (var i = 0; i < results.Count; i++) Console.WriteLine(results[i]);
     }
@@ -63,6 +57,6 @@ public class Nameservers
         Console.WriteLine("Host:                Address:                Average Ping:");
         foreach (var nameserver in nameservers)
             Console.WriteLine(
-                $"{nameserver.Name}{nameserver.IpAddress} {nameserver.TotalPing / TESTSTORUN}ms");
+                $"{nameserver.Name}     {nameserver.IpAddress}     {nameserver.TotalPing / TESTSTORUN}ms");
     }
 }

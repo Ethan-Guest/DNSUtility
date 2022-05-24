@@ -19,7 +19,7 @@
 
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Margin="10,0">Run DNS Test</Button>
+            <Button Command="{Binding RunDnsTest}" Margin="10,0">Run DNS Test</Button>
             <Button Margin="10,0">Apply DNS</Button>
             <Button Margin="10,0">Settings</Button>
         </StackPanel>

@@ -1,4 +1,5 @@
 using System.Linq;
+using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.Parsers;
 using ReactiveUI;
 
@@ -10,7 +11,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel(IParser parser)
     {
-        Content = List = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList());
+        Content = List = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
+            new PingBenchmark());
     }
 
     public ViewModelBase Content

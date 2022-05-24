@@ -43,8 +43,8 @@ internal class Program
         {
             var parser = new NameserverCsvParser();
             var results = parser.Parse("https://public-dns.info/nameservers.csv")
-                .Where(n => n.Country == "US" && n.Dnssec && n.Reliability == 1)
-                .ToList();
+                .Where(n => n.Country == "US" && n.Dnssec && n.Reliability == 1).ToList();
+
 
             // Instantiate the nameserver class
             var nameservers = new Nameservers();
@@ -71,6 +71,8 @@ internal class Program
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
+
+        // Set the users DNS settings
         else if (input == "3")
         {
             Console.Write("Enter your new primaryDNS: ");
