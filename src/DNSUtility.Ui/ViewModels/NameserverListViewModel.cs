@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 using DNSUtility.Domain;
 using DNSUtility.Service.Benchmarks;
 using ReactiveUI;
@@ -18,19 +19,19 @@ public class NameserverListViewModel : ViewModelBase
         Nameservers = new ObservableCollection<Nameserver>(nameservers);
 
 
-        RunDnsTest = ReactiveCommand.Create(
+        RunDnsTest = ReactiveCommand.CreateFromTask(async
             () =>
-            {
-                // TODO: clean this up and run tests in parallel
-                var increment = 0;
-                foreach (var nameserver in Nameservers.Where(n => n.Country == "US"))
+        {
+            var threadPool = new List<Task>();
+
+            foreach (var nameserver in Nameservers.Where(n => n.Country == "US"))
+                threadPool.Add(Task.Run(() =>
                 {
-                    if (increment == 10) break;
                     var ping = pingBenchmark.RunBenchmark(nameserver);
                     nameserver.TotalPing = ping;
-                    increment++;
-                }
-            });
+                }));
+            await Task.WhenAll(threadPool);
+        });
     }
 
     public ObservableCollection<Nameserver> Nameservers

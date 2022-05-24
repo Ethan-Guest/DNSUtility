@@ -7,8 +7,8 @@ public class Nameserver : ReactiveObject
 {
     private string _country;
 
-
     private bool _dnssec;
+
     private string _ipAddress;
 
     private string _name;
