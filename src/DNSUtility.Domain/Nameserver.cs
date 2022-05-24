@@ -1,18 +1,61 @@
 ﻿using CsvHelper.Configuration.Attributes;
+using ReactiveUI;
 
 namespace DNSUtility.Domain;
 
-public class Nameserver
+public class Nameserver : ReactiveObject
 {
-    [Name("ip_address")] public string IpAddress { get; set; }
+    private string _country;
 
-    [Name("as_org")] public string Name { get; set; }
 
-    [Name("country_code")] public string Country { get; set; }
+    private bool _dnssec;
+    private string _ipAddress;
 
-    [Name("dnssec")] public bool Dnssec { get; set; }
+    private string _name;
 
-    [Name("reliability")] public decimal Reliability { get; set; }
+    private decimal _reliability;
 
-    [Ignore] public long TotalPing { get; set; }
+    private long _totalPing;
+
+    [Name("ip_address")]
+    public string IpAddress
+    {
+        get => _ipAddress;
+        set => this.RaiseAndSetIfChanged(ref _ipAddress, value);
+    }
+
+    [Name("as_org")]
+    public string Name
+    {
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
+    }
+
+    [Name("country_code")]
+    public string Country
+    {
+        get => _country;
+        set => this.RaiseAndSetIfChanged(ref _country, value);
+    }
+
+    [Name("dnssec")]
+    public bool Dnssec
+    {
+        get => _dnssec;
+        set => this.RaiseAndSetIfChanged(ref _dnssec, value);
+    }
+
+    [Name("reliability")]
+    public decimal Reliability
+    {
+        get => _reliability;
+        set => this.RaiseAndSetIfChanged(ref _reliability, value);
+    }
+
+    [Ignore]
+    public long TotalPing
+    {
+        get => _totalPing;
+        set => this.RaiseAndSetIfChanged(ref _totalPing, value);
+    }
 }
