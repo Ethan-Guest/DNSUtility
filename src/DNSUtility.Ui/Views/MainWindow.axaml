@@ -1,8 +1,50 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Width="600" Height="800"
+        Width="1040" Height="720"
         x:Class="DNSUtility.Ui.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="DNSUtility.Ui"
-        Content="{Binding Content}">
+        Background="Transparent"
+        CanResize="True"
+        WindowStartupLocation="CenterScreen">        <!--Content="{Binding Content}"-->
+
+
+        <Window.TransparencyBackgroundFallback>
+                <SolidColorBrush Opacity="0.0" />
+        </Window.TransparencyBackgroundFallback>
+
+        <Border Background="#272537" CornerRadius="20">
+
+                <!--<DockPanel>
+                        
+                        <Rectangle DockPanel.Dock="Top" Height="100" Fill="Green"></Rectangle>
+                        <Rectangle DockPanel.Dock="Bottom" Height="60" Fill="Blue"></Rectangle>
+                        <Rectangle DockPanel.Dock="Left" Width="40" Fill="Yellow"></Rectangle>
+                        <Rectangle DockPanel.Dock="Right" Width="40" Fill="Red"></Rectangle>
+                        <Rectangle Fill="Magenta"></Rectangle>
+
+                </DockPanel>-->
+
+
+                <Grid ShowGridLines="True">
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="520" />
+                                <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <DockPanel Grid.Column="0">
+
+                                <TextBlock DockPanel.Dock="Top" Text="DNS Utility"
+                                           VerticalAlignment="Top"
+                                           Margin="0,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           Foreground="White"
+                                           FontSize="22" />
+                        </DockPanel>
+
+                        <DockPanel Grid.Column="1" />
+
+
+                </Grid>
+        </Border>
+        
+
 </Window>

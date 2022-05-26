@@ -11,7 +11,7 @@ public class PingBenchmark : IBenchmark
         var pingSender = new Ping();
 
         // Ping the server
-        var reply = pingSender.Send(nameserver.IpAddress, 1500);
+        var reply = pingSender.Send(nameserver.IpAddress, 10000);
 
         return reply.RoundtripTime;
     }

@@ -30,4 +30,7 @@
         <ProjectReference Include="..\DNSUtility.Domain\DNSUtility.Domain.csproj"/>
         <ProjectReference Include="..\DNSUtility.Service\DNSUtility.Service.csproj"/>
     </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="ViewModels\NameserverViewModel.cs"/>
+    </ItemGroup>
 </Project>
