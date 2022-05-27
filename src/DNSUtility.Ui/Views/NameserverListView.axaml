@@ -3,11 +3,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DNSUtility.Ui.Views.NameserverListView">
+             x:Class="DNSUtility.Ui.Views.NameserverListView"
+             Background="#272537">
 
-    <DockPanel>
-        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" ShowGridLines="True">
-            <DataGrid Name="MyDataGrid" MaxHeight="600" MinHeight="30" Items="{Binding Nameservers}"
+
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="520" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+            <RowDefinition MaxHeight="80" />
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Text="DNS Utility"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="40,0,0,0"
+                   Foreground="White"
+                   FontSize="22" />
+
+        <Grid Grid.Row="1" VerticalAlignment="Top" ShowGridLines="True">
+            <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn MaxWidth="150" Header="Name" Binding="{Binding Name}" />
@@ -19,7 +40,7 @@
         </Grid>
 
 
-        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+        <Grid Grid.Row="2" DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -30,5 +51,5 @@
             <Button Grid.Column="2" Margin="10,0">Settings</Button>
         </Grid>
 
-    </DockPanel>
+    </Grid>
 </UserControl>

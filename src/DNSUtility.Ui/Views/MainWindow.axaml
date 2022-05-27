@@ -4,61 +4,15 @@
         x:Class="DNSUtility.Ui.Views.MainWindow"
         Background="Transparent"
         CanResize="True"
-        WindowStartupLocation="CenterScreen">        <!--Content="{Binding Content}"-->
+        WindowStartupLocation="CenterScreen">
 
 
-        <Window.TransparencyBackgroundFallback>
-                <SolidColorBrush Opacity="0.0" />
-        </Window.TransparencyBackgroundFallback>
+    <Window.TransparencyBackgroundFallback>
+        <SolidColorBrush Opacity="0.0" />
+    </Window.TransparencyBackgroundFallback>
 
-        <Border Background="#272537" CornerRadius="20">
-
-                <!--<DockPanel>
-                        
-                        <Rectangle DockPanel.Dock="Top" Height="100" Fill="Green"></Rectangle>
-                        <Rectangle DockPanel.Dock="Bottom" Height="60" Fill="Blue"></Rectangle>
-                        <Rectangle DockPanel.Dock="Left" Width="40" Fill="Yellow"></Rectangle>
-                        <Rectangle DockPanel.Dock="Right" Width="40" Fill="Red"></Rectangle>
-                        <Rectangle Fill="Magenta"></Rectangle>
-
-                </DockPanel>-->
-
-
-                <Grid ShowGridLines="True">
-                        <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="520" />
-                                <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                                <RowDefinition Height="80" />
-                                <RowDefinition />
-                                <RowDefinition MaxHeight="80" />
-
-
-                        </Grid.RowDefinitions>
-
-                        <!--<DockPanel Grid.Column="0">
-
-                                <TextBlock DockPanel.Dock="Top" Text="DNS Utility"
-                                           VerticalAlignment="Top"
-                                           Margin="0,0,0,0"
-                                           HorizontalAlignment="Left"
-                                           Foreground="White"
-                                           FontSize="22" />
-                        </DockPanel>
-                        <DockPanel Grid.Column="1" />-->
-
-                        <ContentControl Grid.Row="1" Grid.RowSpan="2" Content="{Binding Content}" />
-
-                        <TextBlock Text="DNS Utility"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   Margin="40,0,0,0"
-                                   Foreground="White"
-                                   FontSize="22" />
-                </Grid>
-        </Border>
-        
+    <Border Background="#272537" CornerRadius="20">
+        <ContentControl Content="{Binding Content}" />
+    </Border>
 
 </Window>
