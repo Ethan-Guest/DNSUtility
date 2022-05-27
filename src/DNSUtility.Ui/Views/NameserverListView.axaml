@@ -6,8 +6,9 @@
              x:Class="DNSUtility.Ui.Views.NameserverListView">
 
     <DockPanel>
-        <Grid DockPanel.Dock="Top" Height="600" Margin="25" ShowGridLines="True">
-            <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}" AutoGenerateColumns="False">
+        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" ShowGridLines="True">
+            <DataGrid Name="MyDataGrid" MaxHeight="600" MinHeight="30" Items="{Binding Nameservers}"
+                      AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn MaxWidth="150" Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn MaxWidth="150" Header="Country" Binding="{Binding Country}" />
@@ -18,10 +19,16 @@
         </Grid>
 
 
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding RunDnsTest}" Margin="10,0">Run DNS Test</Button>
-            <Button Margin="10,0">Apply DNS</Button>
-            <Button Margin="10,0">Settings</Button>
-        </StackPanel>
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding RunDnsTest}" Margin="10,0">Run DNS Test</Button>
+            <Button Grid.Column="1" Margin="10,0">Apply DNS</Button>
+            <Button Grid.Column="2" Margin="10,0">Settings</Button>
+        </Grid>
+
     </DockPanel>
 </UserControl>

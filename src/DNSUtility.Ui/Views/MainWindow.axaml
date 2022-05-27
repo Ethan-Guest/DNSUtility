@@ -30,7 +30,15 @@
                                 <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <DockPanel Grid.Column="0">
+                        <Grid.RowDefinitions>
+                                <RowDefinition Height="80" />
+                                <RowDefinition />
+                                <RowDefinition MaxHeight="80" />
+
+
+                        </Grid.RowDefinitions>
+
+                        <!--<DockPanel Grid.Column="0">
 
                                 <TextBlock DockPanel.Dock="Top" Text="DNS Utility"
                                            VerticalAlignment="Top"
@@ -39,10 +47,16 @@
                                            Foreground="White"
                                            FontSize="22" />
                         </DockPanel>
+                        <DockPanel Grid.Column="1" />-->
 
-                        <DockPanel Grid.Column="1" />
+                        <ContentControl Grid.Row="1" Grid.RowSpan="2" Content="{Binding Content}" />
 
-
+                        <TextBlock Text="DNS Utility"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="40,0,0,0"
+                                   Foreground="White"
+                                   FontSize="22" />
                 </Grid>
         </Border>
         
