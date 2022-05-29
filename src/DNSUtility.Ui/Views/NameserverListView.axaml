@@ -3,14 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DNSUtility.Ui.Views.NameserverListView"
-             Background="#272537">
+             x:Class="DNSUtility.Ui.Views.NameserverListView">
 
 
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="520" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="520" />
+
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -28,7 +28,7 @@
                    FontSize="22" />
 
         <Grid Grid.Row="1" VerticalAlignment="Top" ShowGridLines="True">
-            <DataGrid Name="MyDataGrid" Items="{Binding Nameservers}"
+            <DataGrid Margin="40,0,0,0" Name="MyDataGrid" Items="{Binding Nameservers}"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn MaxWidth="150" Header="Name" Binding="{Binding Name}" />
@@ -36,11 +36,12 @@
                     <DataGridTextColumn MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}" />
                     <DataGridTextColumn MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
                 </DataGrid.Columns>
+
             </DataGrid>
         </Grid>
 
 
-        <Grid Grid.Row="2" DockPanel.Dock="Bottom">
+        <Grid HorizontalAlignment="Center" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
