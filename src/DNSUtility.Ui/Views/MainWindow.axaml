@@ -3,13 +3,7 @@
         Width="1040" Height="720"
         x:Class="DNSUtility.Ui.Views.MainWindow"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen"
-        TransparencyLevelHint="AcrylicBlur"
-        ExtendClientAreaTitleBarHeightHint="50"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="Default, PreferSystemChrome"
-        IsHitTestVisible="False">
-
+        WindowStartupLocation="CenterScreen">
 
     <Window.TransparencyBackgroundFallback>
         <SolidColorBrush Opacity="0.0" />
