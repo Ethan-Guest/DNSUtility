@@ -25,6 +25,6 @@ public class NameserverCsvParser : IParser
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return csv.GetRecords<Nameserver>().ToList().Where(n =>
             !string.IsNullOrEmpty(n.Country) && !string.IsNullOrEmpty(n.Name) &&
-            !string.IsNullOrEmpty(n.IpAddress) && n.Country == "US");
+            !string.IsNullOrEmpty(n.IpAddress) && n.Country == "US" && !n.IpAddress.Contains(":"));
     }
 }
