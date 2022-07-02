@@ -31,10 +31,11 @@
             <DataGrid Margin="40,0,0,0" Name="MyDataGrid" Items="{Binding Nameservers}"
                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn MaxWidth="150" Header="Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn MaxWidth="150" Header="Country" Binding="{Binding Country}" />
-                    <DataGridTextColumn MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}" />
-                    <DataGridTextColumn MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}" />
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress"
+                                        Binding="{Binding IpAddress}" />
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
                 </DataGrid.Columns>
 
             </DataGrid>
