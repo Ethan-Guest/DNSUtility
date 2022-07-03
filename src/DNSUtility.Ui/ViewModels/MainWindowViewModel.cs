@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.Parsers;
@@ -7,8 +9,6 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private ViewModelBase _nameserverListContent;
-
     public MainWindowViewModel(IParser parser)
     {
         NameserverListViewModel = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
@@ -16,11 +16,7 @@ public class MainWindowViewModel : ViewModelBase
         NameserverListContent = NameserverListViewModel;
     }
 
-    public ViewModelBase NameserverListContent
-    {
-        get => _nameserverListContent;
-        private set => this.RaiseAndSetIfChanged(ref _nameserverListContent, value);
-    }
+    public ViewModelBase NameserverListContent { get; set; }
 
     public NameserverListViewModel NameserverListViewModel { get; }
 }
