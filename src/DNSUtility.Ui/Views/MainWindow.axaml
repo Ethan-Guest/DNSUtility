@@ -7,18 +7,48 @@
         ExtendClientAreaToDecorationsHint="True"
         WindowStartupLocation="CenterScreen">
 
+    <!-- Main panel -->
     <Panel>
-            <ExperimentalAcrylicBorder IsHitTestVisible="False">
-                <ExperimentalAcrylicBorder.Material>
-                    <ExperimentalAcrylicMaterial
-                        BackgroundSource="Digger"
-                        TintColor="Black"
-                        TintOpacity="1"
-                        MaterialOpacity="0.65" />
-                </ExperimentalAcrylicBorder.Material>
-            </ExperimentalAcrylicBorder>
-            <ContentControl Content="{Binding NameserverListContent}" />
-            
-        </Panel>
+
+        <!-- Main panel style-->
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <!-- Main panel grid to format all views-->
+        <Grid ShowGridLines="True">
+
+            <!-- Columns -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="520" />
+                <ColumnDefinition Width="520" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Rows -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition />
+                <RowDefinition MaxHeight="80" />
+            </Grid.RowDefinitions>
+
+            <!-- Header Title -->
+            <TextBlock Text="DNS Utility"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="40,0,0,0"
+                       Foreground="White"
+                       FontSize="22" />
+
+            <!-- Nameserver list view -->
+            <ContentControl Grid.Row="1" Grid.RowSpan="2" Content="{Binding NameserverListContent}" />
+
+        </Grid>
+    </Panel>
 
 </Window>

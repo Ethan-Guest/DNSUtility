@@ -6,43 +6,30 @@
              x:Class="DNSUtility.Ui.Views.NameserverListView">
 
 
+    <!-- Grid to hold nameserver list and control buttons -->
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="520" />
-            <ColumnDefinition Width="520" />
-
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
             <RowDefinition />
             <RowDefinition MaxHeight="80" />
         </Grid.RowDefinitions>
 
+        <!-- Data grid for displaying nameservers -->
+        <DataGrid Margin="40,0,0,0" Name="MyDataGrid" Items="{Binding Nameservers}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}" />
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress"
+                                    Binding="{Binding IpAddress}" />
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
-        <TextBlock Text="DNS Utility"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="40,0,0,0"
-                   Foreground="White"
-                   FontSize="22" />
-
-        <Grid Grid.Row="1" VerticalAlignment="Top" ShowGridLines="True">
-            <DataGrid Margin="40,0,0,0" Name="MyDataGrid" Items="{Binding Nameservers}"
-                      AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
-                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}" />
-                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress"
-                                        Binding="{Binding IpAddress}" />
-                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
-                </DataGrid.Columns>
-
-            </DataGrid>
-        </Grid>
-
-
-        <Grid HorizontalAlignment="Center" Grid.Row="2">
+        <!--Grid for control buttons -->
+        <Grid HorizontalAlignment="Center" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -52,6 +39,5 @@
             <Button Grid.Column="1" Margin="10,0">Apply DNS</Button>
             <Button Grid.Column="2" Margin="10,0">Settings</Button>
         </Grid>
-
     </Grid>
 </UserControl>
