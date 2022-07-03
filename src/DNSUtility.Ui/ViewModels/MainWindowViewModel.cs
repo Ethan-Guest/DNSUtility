@@ -7,19 +7,20 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private ViewModelBase content;
+    private ViewModelBase _nameserverListContent;
 
     public MainWindowViewModel(IParser parser)
     {
-        Content = List = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
+        NameserverListViewModel = new NameserverListViewModel(parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
             new PingBenchmark());
+        NameserverListContent = NameserverListViewModel;
     }
 
-    public ViewModelBase Content
+    public ViewModelBase NameserverListContent
     {
-        get => content;
-        private set => this.RaiseAndSetIfChanged(ref content, value);
+        get => _nameserverListContent;
+        private set => this.RaiseAndSetIfChanged(ref _nameserverListContent, value);
     }
 
-    public NameserverListViewModel List { get; }
+    public NameserverListViewModel NameserverListViewModel { get; }
 }

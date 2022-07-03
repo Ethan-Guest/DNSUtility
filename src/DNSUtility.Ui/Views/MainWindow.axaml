@@ -2,15 +2,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Width="1040" Height="720"
         x:Class="DNSUtility.Ui.Views.MainWindow"
+        TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
         WindowStartupLocation="CenterScreen">
 
-    <Window.TransparencyBackgroundFallback>
-        <SolidColorBrush Opacity="0.0" />
-    </Window.TransparencyBackgroundFallback>
-
-    <Border Background="#272537" CornerRadius="20">
-        <ContentControl Content="{Binding Content}" />
-    </Border>
+    <Panel>
+            <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                <ExperimentalAcrylicBorder.Material>
+                    <ExperimentalAcrylicMaterial
+                        BackgroundSource="Digger"
+                        TintColor="Black"
+                        TintOpacity="1"
+                        MaterialOpacity="0.65" />
+                </ExperimentalAcrylicBorder.Material>
+            </ExperimentalAcrylicBorder>
+            <ContentControl Content="{Binding NameserverListContent}" />
+            
+        </Panel>
 
 </Window>
