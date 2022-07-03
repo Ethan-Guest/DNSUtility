@@ -10,28 +10,43 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverListViewModel : ViewModelBase
 {
-    private ObservableCollection<Nameserver> _nameservers;
-
-
     public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark)
     {
-        Nameservers = new ObservableCollection<Nameserver>(nameservers);
+        Nameservers = new ObservableCollection<NameserverViewModel>();
+
+        int count = 0;
+        
+        foreach (var nameserver in nameservers)
+        {
+            var vm = new NameserverViewModel(nameserver);
+            Nameservers.Add(vm);
+            count++;
+            if (count == 10)
+            {
+                break;
+            }
+        }
 
         RunDnsTest = ReactiveCommand.Create(
             () =>
             {
+
                 foreach (var nameserver in Nameservers)
                     // Create a new thread for each test
                     new Thread(() =>
                     {
+                        for (int i = 0; i < 100; i++)
+                        {
+                            var ping = pingBenchmark.RunBenchmark(nameserver.IpAddress);
+                            nameserver.TotalPing = ping;
+                        }
                         // Run the test
-                        var ping = pingBenchmark.RunBenchmark(nameserver);
-                        nameserver.TotalPing = ping;
                     }).Start();
             });
     }
-
-    public ObservableCollection<Nameserver> Nameservers { get; }
+    
+    public ObservableCollection<NameserverViewModel> Nameservers { get; }
+    //public ObservableCollection<Nameserver> Nameservers { get; }
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
 
