@@ -5,6 +5,8 @@ namespace DNSUtility.Domain;
 
 public class Nameserver
 {
+    // The nameserver class is a standard model class with CsvHelper name attributes
+    // that map the headers of a csv file into their corresponding data types
     [Name("ip_address")]
     public string IpAddress { get; set; }
 
@@ -19,7 +21,5 @@ public class Nameserver
 
     [Name("reliability")]
     public decimal Reliability { get; set; }
-
-    [Ignore]
-    public long TotalPing { get; set; }
+    
 }
