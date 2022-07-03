@@ -4,5 +4,5 @@ namespace DNSUtility.Service.Benchmarks;
 
 public interface IBenchmark
 {
-    long RunBenchmark(Nameserver nameserver);
+    long RunBenchmark(string address);
 }

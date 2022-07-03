@@ -5,13 +5,13 @@ namespace DNSUtility.Service.Benchmarks;
 
 public class PingBenchmark : IBenchmark
 {
-    public long RunBenchmark(Nameserver nameserver)
+    public long RunBenchmark(string address)
     {
         // Create ping sender
         var pingSender = new Ping();
 
         // Ping the server
-        var reply = pingSender.Send(nameserver.IpAddress, 10000);
+        var reply = pingSender.Send(address, 10000);
 
         return reply.RoundtripTime;
     }
