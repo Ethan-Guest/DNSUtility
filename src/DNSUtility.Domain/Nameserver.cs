@@ -3,7 +3,7 @@ using ReactiveUI;
 
 namespace DNSUtility.Domain;
 
-public class Nameserver : ReactiveObject
+public class Nameserver
 {
     private string _country;
 
@@ -18,44 +18,20 @@ public class Nameserver : ReactiveObject
     private long _totalPing;
 
     [Name("ip_address")]
-    public string IpAddress
-    {
-        get => _ipAddress;
-        set => this.RaiseAndSetIfChanged(ref _ipAddress, value);
-    }
+    public string IpAddress { get; set; }
 
     [Name("as_org")]
-    public string Name
-    {
-        get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
-    }
+    public string Name { get; set; }
 
     [Name("country_code")]
-    public string Country
-    {
-        get => _country;
-        set => this.RaiseAndSetIfChanged(ref _country, value);
-    }
+    public string Country { get; set; }
 
     [Name("dnssec")]
-    public bool Dnssec
-    {
-        get => _dnssec;
-        set => this.RaiseAndSetIfChanged(ref _dnssec, value);
-    }
+    public bool Dnssec { get; set; }
 
     [Name("reliability")]
-    public decimal Reliability
-    {
-        get => _reliability;
-        set => this.RaiseAndSetIfChanged(ref _reliability, value);
-    }
+    public decimal Reliability { get; set; }
 
     [Ignore]
-    public long TotalPing
-    {
-        get => _totalPing;
-        set => this.RaiseAndSetIfChanged(ref _totalPing, value);
-    }
+    public long TotalPing { get; set; }
 }
