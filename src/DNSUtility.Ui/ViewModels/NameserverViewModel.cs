@@ -1,4 +1,5 @@
-﻿using DNSUtility.Domain;
+﻿using System.Collections.Generic;
+using DNSUtility.Domain;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -16,7 +17,9 @@ public class NameserverViewModel : ViewModelBase
 
     private decimal _reliability;
 
-    private long _totalPing;
+    private List<ushort> _pings;
+    
+    private ushort _totalPing;
 
     public NameserverViewModel(Nameserver nameserver)
     {
@@ -25,7 +28,8 @@ public class NameserverViewModel : ViewModelBase
         Country = nameserver.Country;
         Dnssec = nameserver.Dnssec;
         Reliability = nameserver.Reliability;
-        TotalPing = nameserver.TotalPing;
+        TotalPing = 0;
+        Pings = new List<ushort>();
     }
     public string IpAddress
     {
@@ -57,7 +61,12 @@ public class NameserverViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _reliability, value);
     }
 
-    public long TotalPing
+    public List<ushort> Pings 
+    {
+        get => _pings;
+        set => this.RaiseAndSetIfChanged(ref _pings, value);
+    }
+    public ushort TotalPing
     {
         get => _totalPing;
         set => this.RaiseAndSetIfChanged(ref _totalPing, value);
