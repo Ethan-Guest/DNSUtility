@@ -5,7 +5,7 @@ namespace DNSUtility.Service.Benchmarks;
 
 public class PingBenchmark : IBenchmark
 {
-    public long RunBenchmark(string address)
+    public ushort RunBenchmark(string address)
     {
         // Create ping sender
         var pingSender = new Ping();
@@ -13,6 +13,6 @@ public class PingBenchmark : IBenchmark
         // Ping the server
         var reply = pingSender.Send(address, 10000);
 
-        return reply.RoundtripTime;
+        return (ushort)reply.RoundtripTime;
     }
 }

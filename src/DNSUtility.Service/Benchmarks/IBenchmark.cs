@@ -4,5 +4,5 @@ namespace DNSUtility.Service.Benchmarks;
 
 public interface IBenchmark
 {
-    long RunBenchmark(string address);
+    ushort RunBenchmark(string address);
 }
