@@ -7,7 +7,7 @@
              x:Class="DNSUtility.Ui.Views.ScattPlotView">
     
     <Border CornerRadius="10" Background="Black">
-        <ScottPlot:AvaPlot Name="ScattPlot"></ScottPlot:AvaPlot>
+        <ScottPlot:AvaPlot Name="ScattPlot" Content="{Binding ScatterPlot}"></ScottPlot:AvaPlot>
     </Border>
     
 </UserControl>

@@ -63,13 +63,16 @@ public class NameserverListViewModel : ViewModelBase
 
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(CreatePlot!);
-
+            .Subscribe(CreatePlot);
     }
 
-    private async void CreatePlot(NameserverViewModel nameserver)
+    private async void CreatePlot(NameserverViewModel? nameserver)
     {
-        MainViewModel.ScatterPlotViewModel = new ScattPlotViewModel();
+        if (nameserver == null)
+        {
+            return;
+        }
+        MainViewModel.ScatterPlotViewModel = new ScattPlotViewModel(nameserver);
     }
     
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
