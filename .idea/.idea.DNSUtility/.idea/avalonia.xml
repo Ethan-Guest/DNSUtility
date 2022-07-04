@@ -6,6 +6,7 @@
         <entry key="src/DNSUtility.Ui/App.axaml" value="src/DNSUtility.Ui/DNSUtility.Ui.csproj" />
         <entry key="src/DNSUtility.Ui/Views/MainWindow.axaml" value="src/DNSUtility.Ui/DNSUtility.Ui.csproj" />
         <entry key="src/DNSUtility.Ui/Views/NameserverListView.axaml" value="src/DNSUtility.Ui/DNSUtility.Ui.csproj" />
+        <entry key="src/DNSUtility.Ui/Views/ScattPlotView.axaml" value="src/DNSUtility.Ui/DNSUtility.Ui.csproj" />
       </map>
     </option>
   </component>

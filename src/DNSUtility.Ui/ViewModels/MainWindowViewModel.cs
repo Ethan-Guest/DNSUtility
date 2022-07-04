@@ -12,9 +12,14 @@ public class MainWindowViewModel : ViewModelBase
             parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
             new PingBenchmark());
         NameserverListContent = NameserverListViewModel;
+
+        ScattPlot = new ScattPlotViewModel();
     }
 
     public ViewModelBase NameserverListContent { get; set; }
 
     public ViewModelBase NameserverListViewModel { get; }
+    
+    public ViewModelBase ScattPlot { get; }
+
 }
