@@ -23,7 +23,7 @@
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}" />
-                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding TotalPing}" />
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding LatestPing}" />
             </DataGrid.Columns>
         </DataGrid>
 

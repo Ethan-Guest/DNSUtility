@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DNSUtility.Domain;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -19,7 +20,9 @@ public class NameserverViewModel : ViewModelBase
 
     private List<ushort> _pings;
     
-    private ushort _totalPing;
+    private ushort _latestPing;
+
+    private ushort _averagePing;
 
     public NameserverViewModel(Nameserver nameserver)
     {
@@ -28,7 +31,7 @@ public class NameserverViewModel : ViewModelBase
         Country = nameserver.Country;
         Dnssec = nameserver.Dnssec;
         Reliability = nameserver.Reliability;
-        TotalPing = 0;
+        AveragePing = 0;
         Pings = new List<ushort>();
     }
     public string IpAddress
@@ -61,14 +64,29 @@ public class NameserverViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _reliability, value);
     }
 
-    public List<ushort> Pings 
+    public List<ushort> Pings
     {
         get => _pings;
         set => this.RaiseAndSetIfChanged(ref _pings, value);
     }
-    public ushort TotalPing
+    public ushort LatestPing
     {
-        get => _totalPing;
-        set => this.RaiseAndSetIfChanged(ref _totalPing, value);
+        get => _latestPing;
+        set => this.RaiseAndSetIfChanged(ref _latestPing, value);
+    }
+    public ushort AveragePing
+    {
+        get => _averagePing;
+        set => this.RaiseAndSetIfChanged(ref _averagePing, value);
+    }
+
+    // A method for calculating the average ping of the name server
+    public void CaclulateAveragePing()
+    {
+        foreach (var ping in Pings)
+        {
+            AveragePing += ping;
+        }
+        AveragePing = (ushort)(AveragePing / Pings.Count);
     }
 }
