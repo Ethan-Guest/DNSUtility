@@ -15,15 +15,21 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverListViewModel : ViewModelBase
 {
-    public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark)
-    {
-        Nameservers = new ObservableCollection<NameserverViewModel>();
+    private NameserverViewModel? _selectedNameserver;
 
+    public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark, MainWindowViewModel mainWindowViewModel)
+    {
+        // Get access to main view model instance
+        MainViewModel = mainWindowViewModel;
+        
+        // Initialize the list of nameservers for the UI
+        Nameservers = new ObservableCollection<NameserverViewModel>();
+        
         // Convert list of nameservers to a list of NameserverViewModels
         foreach (var nameserver in nameservers)
         {
-            var namserverViewModel = new NameserverViewModel(nameserver);
-            Nameservers.Add(namserverViewModel);
+            var nameserverViewModel = new NameserverViewModel(nameserver);
+            Nameservers.Add(nameserverViewModel);
         }
 
         RunDnsTest = ReactiveCommand.Create(
@@ -37,14 +43,14 @@ public class NameserverListViewModel : ViewModelBase
                         for (int i = 0; i < 5; i++)
                         {
                             ushort ping = pingBenchmark.RunBenchmark(nameserver.IpAddress);
-                            
+
 
                             // Set the reply as the latest ping
                             nameserver.LatestPing = ping;
-                        
+
                             // Add the reply to the list of pings
                             nameserver.Pings.Add(ping);
-                            
+
                             // If the ping replies with 0, remove it from the list
                             /*if (ping == 0)
                             {
@@ -52,12 +58,29 @@ public class NameserverListViewModel : ViewModelBase
                                 break;
                             }*/
                         }
-                    }).Start(); 
+                    }).Start();
             });
+
+        this.WhenAnyValue(x => x.SelectedNameserver)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(CreatePlot!);
+
+    }
+
+    private async void CreatePlot(NameserverViewModel nameserver)
+    {
+        MainViewModel.ScatterPlotViewModel = new ScattPlotViewModel();
     }
     
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
-    
+
+    public NameserverViewModel? SelectedNameserver
+    {
+        get => _selectedNameserver;
+        set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
+    }
+
+    public MainWindowViewModel MainViewModel { get; set; }
 }

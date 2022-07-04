@@ -34,6 +34,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition />
+                <RowDefinition />
                 <RowDefinition MaxHeight="80" />
             </Grid.RowDefinitions>
 
@@ -46,8 +47,8 @@
                        FontSize="22" />
 
             <!-- Nameserver list view -->
-            <ContentControl Grid.Row="1" Grid.RowSpan="2" Content="{Binding NameserverListViewModel}" />
-            <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding ScattPlot}"></ContentControl>
+            <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Content="{Binding NameserverListViewModel}" />
+            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="0" Content="{Binding ScatterPlotViewModel}" />
 
         </Grid>
     </Panel>

@@ -10,7 +10,6 @@ public partial class ScattPlotView : UserControl
     public ScattPlotView()
     {
         InitializeComponent();
-
     }
 
     private void InitializeComponent()
