@@ -19,9 +19,7 @@ public class NameserverListViewModel : ViewModelBase
     {
         Nameservers = new ObservableCollection<NameserverViewModel>();
 
-        //int count = 0;
-
-        
+        // Convert list of nameservers to a list of NameserverViewModels
         foreach (var nameserver in nameservers)
         {
             var namserverViewModel = new NameserverViewModel(nameserver);
@@ -39,14 +37,22 @@ public class NameserverListViewModel : ViewModelBase
                         for (int i = 0; i < 5; i++)
                         {
                             ushort ping = pingBenchmark.RunBenchmark(nameserver.IpAddress);
-                        
+                            
+
                             // Set the reply as the latest ping
                             nameserver.LatestPing = ping;
                         
                             // Add the reply to the list of pings
                             nameserver.Pings.Add(ping);
+                            
+                            // If the ping replies with 0, remove it from the list
+                            /*if (ping == 0)
+                            {
+                                Nameservers.Remove(nameserver);
+                                break;
+                            }*/
                         }
-                    }).Start();
+                    }).Start(); 
             });
     }
     
