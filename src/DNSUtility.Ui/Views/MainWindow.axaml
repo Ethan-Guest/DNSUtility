@@ -40,7 +40,7 @@
 
             <!-- Nameserver list view -->
             <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Content="{Binding NameserverListViewModel}" />
-            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="0" Content="{Binding ScatterPlotViewModel}" />
+            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="0" Margin="30" Content="{Binding ScatterPlotViewModel}" />
 
         </Grid>
     </Panel>

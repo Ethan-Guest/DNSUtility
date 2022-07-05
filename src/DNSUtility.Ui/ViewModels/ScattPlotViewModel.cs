@@ -24,6 +24,7 @@ public class ScattPlotViewModel : ViewModelBase
         // Disable double click benchmark stats
         ScatterPlot.Configuration.DoubleClickBenchmark = false;
         
+        
         // Disable frame
         ScatterPlot.Plot.Frameless();
         
@@ -53,7 +54,8 @@ public class ScattPlotViewModel : ViewModelBase
             
             scatterPlotData.FillBelow(Color.FromArgb(49, 255, 125), Color.FromArgb(125,49, 255, 125));
             
-   
+            ScatterPlot.Plot.AxisAuto(0); 
+
             //scatterPlotData.Smooth = true;
 
             /*ScatterPlot.Plot.AddFill(dataX, dataY, color: Color.FromArgb(50, 49, 255, 125));
