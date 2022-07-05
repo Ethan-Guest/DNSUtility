@@ -11,15 +11,7 @@
     <Panel>
 
         <!-- Main panel style-->
-        <ExperimentalAcrylicBorder IsHitTestVisible="False">
-            <ExperimentalAcrylicBorder.Material>
-                <ExperimentalAcrylicMaterial
-                    BackgroundSource="Digger"
-                    TintColor="Black"
-                    TintOpacity="1"
-                    MaterialOpacity="0.65" />
-            </ExperimentalAcrylicBorder.Material>
-        </ExperimentalAcrylicBorder>
+        <Border IsHitTestVisible="False" Background="{DynamicResource Background}"/>
 
         <!-- Main panel grid to format all views-->
         <Grid ShowGridLines="True">

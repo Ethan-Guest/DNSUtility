@@ -9,5 +9,14 @@
     <Application.Styles>
         <FluentTheme Mode="Dark" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        
     </Application.Styles>
+    
+    <Application.Resources>
+        <SolidColorBrush x:Key="BackgroundDark">#27273C</SolidColorBrush>
+        <SolidColorBrush x:Key="Background">#2A2A41</SolidColorBrush>
+        <SolidColorBrush x:Key="Foreground">#2E2E48</SolidColorBrush>
+        <SolidColorBrush x:Key="ForegroundLighter">#353553</SolidColorBrush>
+
+    </Application.Resources>
 </Application>
