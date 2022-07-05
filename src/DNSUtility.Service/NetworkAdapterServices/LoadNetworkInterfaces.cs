@@ -2,9 +2,9 @@
 
 namespace DNSUtility.Service.NetworkAdapterServices;
 
-public class LoadNetworkInterface : INetworkInterface
+public class LoadNetworkInterfaces : INetworkInterfaces
 {
-    public NetworkInterface[] RetriveNetworkInterface()
+    public NetworkInterface[] RetrieveAllNetworkInterfaces()
     {
         return NetworkInterface.GetAllNetworkInterfaces();
     }

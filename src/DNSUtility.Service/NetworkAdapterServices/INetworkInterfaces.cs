@@ -2,7 +2,7 @@
 
 namespace DNSUtility.Service.NetworkAdapterServices;
 
-public interface INetworkInterface
+public interface INetworkInterfaces
 {
-    NetworkInterface[] RetriveNetworkInterface();
+    NetworkInterface[] RetrieveAllNetworkInterfaces();
 }
