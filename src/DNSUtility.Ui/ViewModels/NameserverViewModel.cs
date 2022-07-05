@@ -80,8 +80,9 @@ public class NameserverViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _averagePing, value);
     }
 
+    // TODO move to service
     // A method for calculating the average ping of the name server
-    public void CaclulateAveragePing()
+    public void CalculateAveragePing()
     {
         foreach (var ping in Pings)
         {
