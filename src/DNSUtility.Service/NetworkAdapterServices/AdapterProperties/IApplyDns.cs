@@ -5,7 +5,7 @@ namespace DNSUtility.Service.NetworkAdapterServices;
 
 public interface IApplyDns
 {
-    void ApplyPreferredDns(Nameserver nameserver, NetworkInterface adapter);
+    void ApplyPreferredDns(string ipAddress, NetworkInterface adapter);
     
     void ApplyAlternateDns(Nameserver nameserver, NetworkInterface adapter);
 }

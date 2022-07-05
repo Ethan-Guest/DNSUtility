@@ -8,6 +8,8 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using DNSUtility.Domain;
 using DNSUtility.Service.Benchmarks;
+using DNSUtility.Service.NetworkAdapterServices;
+using DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 using DynamicData.Binding;
 using ReactiveUI;
 
@@ -60,6 +62,15 @@ public class NameserverListViewModel : ViewModelBase
                         }
                     }).Start();
             });
+        
+        ApplySelectedNameserver = ReactiveCommand.Create(
+            () =>
+            {
+                var applyDns = new ApplyDns();
+                if (MainViewModel.NetworkAdapters.ActiveInterface != null)
+                    applyDns.ApplyPreferredDns(SelectedNameserver?.IpAddress,
+                        MainViewModel.NetworkAdapters.ActiveInterface);
+            });
 
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
@@ -78,6 +89,9 @@ public class NameserverListViewModel : ViewModelBase
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
+    
+    public ReactiveCommand<Unit, Unit> ApplySelectedNameserver { get; set; }
+
 
     public NameserverViewModel? SelectedNameserver
     {
