@@ -4,5 +4,8 @@ namespace DNSUtility.Service.NetworkAdapterServices;
 
 public interface INetworkInterfaces
 {
-    NetworkInterface[] RetrieveAllNetworkInterfaces();
+    NetworkInterface[] GetAllNetworkInterfaces();
+    
+    NetworkInterface? GetActiveNetworkInterface(NetworkInterface[] adapters);
+
 }

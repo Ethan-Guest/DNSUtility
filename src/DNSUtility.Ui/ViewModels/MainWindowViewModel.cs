@@ -1,7 +1,7 @@
 using System.Linq;
 using DNSUtility.Domain;
 using DNSUtility.Service.Benchmarks;
-using DNSUtility.Service.NetworkAdapterServices;
+using DNSUtility.Service.NetworkAdapterServices.Adapters;
 using DNSUtility.Service.Parsers;
 using ReactiveUI;
 
@@ -33,8 +33,16 @@ public class MainWindowViewModel : ViewModelBase
 
     void InitializeNetworkAdapters()
     {
+        // Create the interface for retrieving all network adapters
+        var networkInterfaces = new LoadNetworkInterfaces();
+
+        // Create the network adapters class
         NetworkAdapters = new NetworkAdapters();
-        INetworkInterfaces networkInterfaces = new LoadNetworkInterfaces();
-        NetworkAdapters.NetworkInterfaces = networkInterfaces.RetrieveAllNetworkInterfaces();
+        
+        // Store the list of network adapters
+        NetworkAdapters.NetworkInterfaces = networkInterfaces.GetAllNetworkInterfaces();
+
+        // Set the default active interface. This can be changed later via a dropdown in the settings UI
+        NetworkAdapters.ActiveInterface = networkInterfaces.GetActiveNetworkInterface(NetworkAdapters.NetworkInterfaces);
     }
 }
