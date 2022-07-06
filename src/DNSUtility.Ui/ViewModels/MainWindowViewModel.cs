@@ -9,7 +9,7 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private ScattPlotViewModel _scatterPlotViewModel;
+    private GraphViewModel _scatterPlotViewModel;
 
     public MainWindowViewModel(IParser parser)
     {
@@ -25,7 +25,7 @@ public class MainWindowViewModel : ViewModelBase
     public NetworkAdapters NetworkAdapters { get; set; }
     public ViewModelBase NameserverListViewModel { get; }
 
-    public ScattPlotViewModel? ScatterPlotViewModel
+    public GraphViewModel? ScatterPlotViewModel
     {
         get => _scatterPlotViewModel;
         set => this.RaiseAndSetIfChanged(ref _scatterPlotViewModel, value);

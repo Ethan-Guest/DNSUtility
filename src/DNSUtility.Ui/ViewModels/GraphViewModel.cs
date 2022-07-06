@@ -6,13 +6,13 @@ using ScottPlot.Avalonia;
 
 namespace DNSUtility.Ui.ViewModels;
 
-public class ScattPlotViewModel : ViewModelBase
+public class GraphViewModel : ViewModelBase
 {
-    private AvaPlot _scatterPlot;
+    private AvaPlot _graph;
 
-    public ScattPlotViewModel(NameserverViewModel nameserver)
+    public GraphViewModel(NameserverViewModel nameserver)
     {
-        ScatterPlot = new AvaPlot();
+        Graph = new AvaPlot();
 
         // Set the plot style
         // Disable zooming
@@ -22,17 +22,17 @@ public class ScattPlotViewModel : ViewModelBase
         ScatterPlot.Configuration.Pan = false;*/
 
         // Disable double click benchmark stats
-        ScatterPlot.Configuration.DoubleClickBenchmark = false;
+        Graph.Configuration.DoubleClickBenchmark = false;
         
         
         // Disable frame
-        ScatterPlot.Plot.Frameless();
+        //ScatterPlot.Plot.Frameless();
         
         // Set axis limits
         /*ScatterPlot.Plot.SetAxisLimits(yMin: 0);*/
 
         
-        ScatterPlot.Plot.Style(Color.Transparent,
+        Graph.Plot.Style(Color.Transparent,
             Color.FromArgb(1, 39, 39, 60),
             Color.FromArgb(53, 53, 83),
             Color.FromArgb(53, 53, 83));
@@ -49,24 +49,24 @@ public class ScattPlotViewModel : ViewModelBase
                 dataY[i] = nameserver.Pings[i];
             }
             
-            var scatterPlotData = ScatterPlot.Plot.AddSignal(dataY,  1, Color.FromArgb(49, 255, 125));
+            var graphPlotData = Graph.Plot.AddSignal(dataY,  1, Color.FromArgb(49, 255, 125));
             
             
-            scatterPlotData.FillBelow(Color.FromArgb(49, 255, 125), Color.FromArgb(125,49, 255, 125));
+            graphPlotData.FillBelow(Color.FromArgb(49, 255, 125), Color.FromArgb(125,49, 255, 125));
             
-            ScatterPlot.Plot.AxisAuto(0); 
+            Graph.Plot.AxisAuto(0); 
 
             //scatterPlotData.Smooth = true;
 
             /*ScatterPlot.Plot.AddFill(dataX, dataY, color: Color.FromArgb(50, 49, 255, 125));
 */
-            ScatterPlot.Refresh();
+            Graph.Refresh();
         }
     }
 
-    public AvaPlot ScatterPlot
+    public AvaPlot Graph
     {
-        get => _scatterPlot;
-        set => this.RaiseAndSetIfChanged(ref _scatterPlot, value);
+        get => _graph;
+        set => this.RaiseAndSetIfChanged(ref _graph, value);
     }
 }
