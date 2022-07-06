@@ -38,9 +38,15 @@
                        Foreground="White"
                        FontSize="22" />
 
-            <!-- Nameserver list view -->
+            <!-- Nameserver list panel -->
             <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Content="{Binding NameserverListViewModel}" />
-            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="0" Margin="30" Content="{Binding ScatterPlotViewModel}" />
+            
+            <!-- Graph panel -->
+            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="30" Content="{Binding ScatterPlotViewModel}" />
+            
+            <!-- Info panel -->
+            <ContentControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Margin="30" Content="{Binding InfoPanelViewModel}" />
+
 
         </Grid>
     </Panel>
