@@ -12,7 +12,7 @@ public class NameserverCsvParser : IParser
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public IEnumerable<Nameserver> Parse(string path)
+    public IEnumerable<Nameserver> Parse(string path, string userCountry)
     {
         // Create the webclient to read from URL
         var client = new WebClient();
@@ -25,6 +25,6 @@ public class NameserverCsvParser : IParser
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return csv.GetRecords<Nameserver>().ToList().Where(n =>
             !string.IsNullOrEmpty(n.Country) && !string.IsNullOrEmpty(n.Name) &&
-            !string.IsNullOrEmpty(n.IpAddress) && n.Country == "US" && !n.IpAddress.Contains(":"));
+            !string.IsNullOrEmpty(n.IpAddress) && n.Country == userCountry && !n.IpAddress.Contains(":"));
     }
 }

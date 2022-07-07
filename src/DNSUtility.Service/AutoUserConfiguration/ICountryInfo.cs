@@ -2,5 +2,5 @@
 
 public interface ICountryInfo
 {
-    string GetCountryCode();
+    Tuple<string, string> GetCountryCode();
 }

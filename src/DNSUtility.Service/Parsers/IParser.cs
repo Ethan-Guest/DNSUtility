@@ -7,5 +7,5 @@ namespace DNSUtility.Service.Parsers;
 /// </summary>
 public interface IParser
 {
-    IEnumerable<Nameserver> Parse(string path);
+    IEnumerable<Nameserver> Parse(string path, string userCountry);
 }

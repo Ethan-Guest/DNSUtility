@@ -1,5 +1,6 @@
 using System.Linq;
 using DNSUtility.Domain;
+using DNSUtility.Domain.LocalSettings;
 using DNSUtility.Domain.UserSettings;
 using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
@@ -21,7 +22,7 @@ public class MainWindowViewModel : ViewModelBase
 
         // Create the nameserver list viewmodel
         NameserverListViewModel = new NameserverListViewModel(
-            parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
+            parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
             new PingBenchmark(), this);
         
     }
@@ -44,12 +45,14 @@ public class MainWindowViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _graph, value);
     }
 
-    // Initialize the users system info. (Country, language)
+    // Initialize the users system info. (Country, language) TODO: Add test to check behavior when country / language is null
     private void InitializeUserInfo()
     {
         ICountryInfo countryInfo = new UserCountryCode();
+        
         var countryCode = countryInfo.GetCountryCode();
-        UserSettings = new UserSettings("4","2");
+        
+        UserSettings = new UserSettings(countryCode.Item1, countryCode.Item2);
     }
     
     // Initialize the users network adapters
