@@ -52,7 +52,7 @@ public class MainWindowViewModel : ViewModelBase
         
         var countryCode = countryInfo.GetCountryCode();
         
-        UserSettings = new UserSettings(countryCode.Item1, countryCode.Item2);
+        UserSettings = new UserSettings(countryCode.Item2, countryCode.Item1);
     }
     
     // Initialize the users network adapters
