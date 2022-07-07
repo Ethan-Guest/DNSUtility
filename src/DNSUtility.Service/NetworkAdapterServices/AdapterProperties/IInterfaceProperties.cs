@@ -1,6 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 
-namespace DNSUtility.Service.NetworkAdapterServices;
+namespace DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 
 public interface IInterfaceProperties
 {
