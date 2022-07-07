@@ -7,6 +7,7 @@ using System.Threading;
 using Avalonia.Collections;
 using Avalonia.Controls;
 using DNSUtility.Domain;
+using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.NetworkAdapterServices;
 using DNSUtility.Service.NetworkAdapterServices.AdapterProperties;

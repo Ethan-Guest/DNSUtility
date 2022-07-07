@@ -2,6 +2,7 @@
 using System.Net;
 using CsvHelper;
 using DNSUtility.Domain;
+using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Service.Parsers;
 

@@ -1,19 +1,17 @@
 ﻿using System.Globalization;
+using DNSUtility.Domain;
+using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Service.AutoUserConfiguration;
 
 public class UserCountryCode : ICountryInfo
 {
-    public Tuple<string, string> GetCountryCode()
+    public CountryInfo GetCountryCode()
     {
-        string culture = CultureInfo.CurrentCulture.Name;
-        string langCountry = culture; // Returns something like "en-US"
-
-        string[] substrings = langCountry.Split('-');
-        var language = substrings[0];
-        var country = substrings[1];
-
-        var languageAndCountry = new Tuple<string, string>(language, country);
-        return languageAndCountry;
+        var culture = CultureInfo.CurrentCulture.Name;
+        var language = culture.Remove(culture.Length - 3);
+        var country = culture.Substring(culture.Length - 2);
+        
+        return new CountryInfo(language, country);
     }
 }

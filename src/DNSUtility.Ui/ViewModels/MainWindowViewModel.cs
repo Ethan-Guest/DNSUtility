@@ -1,6 +1,6 @@
 using System.Linq;
 using DNSUtility.Domain;
-using DNSUtility.Domain.LocalSettings;
+using DNSUtility.Domain.AppModels;
 using DNSUtility.Domain.UserSettings;
 using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
@@ -24,7 +24,6 @@ public class MainWindowViewModel : ViewModelBase
         NameserverListViewModel = new NameserverListViewModel(
             parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
             new PingBenchmark(), this);
-        
     }
 
 
@@ -50,9 +49,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         ICountryInfo countryInfo = new UserCountryCode();
         
-        var countryCode = countryInfo.GetCountryCode();
-        
-        UserSettings = new UserSettings(countryCode.Item2, countryCode.Item1);
+        UserSettings = new UserSettings(countryInfo.GetCountryCode());
     }
     
     // Initialize the users network adapters

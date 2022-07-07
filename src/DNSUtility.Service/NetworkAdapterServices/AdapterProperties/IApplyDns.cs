@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using DNSUtility.Domain;
+using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Service.NetworkAdapterServices;
 

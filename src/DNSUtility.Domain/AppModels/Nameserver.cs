@@ -1,7 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
-using ReactiveUI;
 
-namespace DNSUtility.Domain;
+namespace DNSUtility.Domain.AppModels;
 
 public class Nameserver
 {

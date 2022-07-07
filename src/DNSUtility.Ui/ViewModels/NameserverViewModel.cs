@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using DNSUtility.Domain;
+using DNSUtility.Domain.AppModels;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
