@@ -1,6 +1,6 @@
 ﻿using DNSUtility.Domain.AppModels;
 
-namespace DNSUtility.Domain.UserSettings;
+namespace DNSUtility.Domain.UserModels;
 
 /// <summary>
 ///     The users settings that are used to initialize the app.
@@ -19,7 +19,7 @@ public class UserSettings
     ///     Two letter country code. e.g. US, CA, MX
     /// </summary>
     public string Country { get; set; }
-    
+
     /// <summary>
     ///     Language abbreviation. e.g. EN, ES, FR,
     /// </summary>

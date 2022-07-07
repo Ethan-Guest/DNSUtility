@@ -1,7 +1,6 @@
 using System.Linq;
-using DNSUtility.Domain;
 using DNSUtility.Domain.AppModels;
-using DNSUtility.Domain.UserSettings;
+using DNSUtility.Domain.UserModels;
 using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.NetworkAdapterServices.Adapters;
@@ -27,16 +26,15 @@ public class MainWindowViewModel : ViewModelBase
     }
 
 
-
     // The users settings
     public UserSettings UserSettings { get; set; }
-    
+
     // The users network adapters
     public NetworkAdapters NetworkAdapters { get; set; }
-    
+
     // The nameserver list view model
     public ViewModelBase NameserverListViewModel { get; }
-    
+
     // The ping graph view model
     public GraphViewModel GraphViewModel
     {
@@ -48,10 +46,10 @@ public class MainWindowViewModel : ViewModelBase
     private void InitializeUserInfo()
     {
         ICountryInfo countryInfo = new UserCountryCode();
-        
+
         UserSettings = new UserSettings(countryInfo.GetCountryCode());
     }
-    
+
     // Initialize the users network adapters
     void InitializeNetworkAdapters()
     {
@@ -59,12 +57,7 @@ public class MainWindowViewModel : ViewModelBase
         var networkInterfaces = new LoadNetworkInterfaces();
 
         // Create the network adapters class
-        NetworkAdapters = new NetworkAdapters();
-        
-        // Store the list of network adapters
-        NetworkAdapters.NetworkInterfaces = networkInterfaces.GetAllNetworkInterfaces();
-
-        // Set the default active interface. This can be changed later via a dropdown in the settings UI
-        NetworkAdapters.ActiveInterface = networkInterfaces.GetActiveNetworkInterface(NetworkAdapters.NetworkInterfaces);
+        NetworkAdapters = new NetworkAdapters(networkInterfaces.GetAllNetworkInterfaces(),
+            networkInterfaces.GetActiveNetworkInterface(NetworkAdapters.NetworkInterfaces));
     }
 }
