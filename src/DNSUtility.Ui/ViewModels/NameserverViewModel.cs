@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using DNSUtility.Domain;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -26,6 +28,7 @@ public class NameserverViewModel : ViewModelBase
 
     public NameserverViewModel(Nameserver nameserver)
     {
+        // Initialize nameserver properties
         IpAddress = nameserver.IpAddress;
         Name = nameserver.Name;
         Country = nameserver.Country;

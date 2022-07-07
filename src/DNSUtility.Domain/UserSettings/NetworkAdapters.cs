@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
-namespace DNSUtility.Domain;
+
+namespace DNSUtility.Domain.UserSettings;
 
 public class NetworkAdapters
 {

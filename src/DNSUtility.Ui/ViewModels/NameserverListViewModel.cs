@@ -83,7 +83,7 @@ public class NameserverListViewModel : ViewModelBase
         {
             return;
         }
-        MainViewModel.ScatterPlotViewModel = new GraphViewModel(nameserver);
+        MainViewModel.GraphViewModel = new GraphViewModel(nameserver);
     }
     
     public ObservableCollection<NameserverViewModel> Nameservers { get; }

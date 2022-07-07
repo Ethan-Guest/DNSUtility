@@ -1,5 +1,7 @@
 using System.Linq;
 using DNSUtility.Domain;
+using DNSUtility.Domain.UserSettings;
+using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.NetworkAdapterServices.Adapters;
 using DNSUtility.Service.Parsers;
@@ -9,26 +11,48 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private GraphViewModel _scatterPlotViewModel;
+    private GraphViewModel _graph;
 
     public MainWindowViewModel(IParser parser)
     {
+        // Initialize the users configuration
+        InitializeUserInfo();
+        InitializeNetworkAdapters();
+
         // Create the nameserver list viewmodel
         NameserverListViewModel = new NameserverListViewModel(
             parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
             new PingBenchmark(), this);
-
-        GraphViewModel = new GraphViewModel();
         
-        // Create the user configuration
-        InitializeNetworkAdapters();
     }
 
+
+
+    // The users settings
+    public UserSettings UserSettings { get; set; }
+    
+    // The users network adapters
     public NetworkAdapters NetworkAdapters { get; set; }
+    
+    // The nameserver list view model
     public ViewModelBase NameserverListViewModel { get; }
+    
+    // The ping graph view model
+    public GraphViewModel GraphViewModel
+    {
+        get => _graph;
+        set => this.RaiseAndSetIfChanged(ref _graph, value);
+    }
 
-    public GraphViewModel GraphViewModel { get; set; }
-
+    // Initialize the users system info. (Country, language)
+    private void InitializeUserInfo()
+    {
+        ICountryInfo countryInfo = new UserCountryCode();
+        var countryCode = countryInfo.GetCountryCode();
+        UserSettings = new UserSettings("4","2");
+    }
+    
+    // Initialize the users network adapters
     void InitializeNetworkAdapters()
     {
         // Create the interface for retrieving all network adapters
