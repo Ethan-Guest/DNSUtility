@@ -5,9 +5,9 @@ using ScottPlot.Avalonia;
 
 namespace DNSUtility.Ui.Views;
 
-public partial class ScattPlotView : UserControl
+public partial class GraphView : UserControl
 {
-    public ScattPlotView()
+    public GraphView()
     {
         InitializeComponent();
     }

@@ -17,6 +17,8 @@ public class MainWindowViewModel : ViewModelBase
         NameserverListViewModel = new NameserverListViewModel(
             parser.Parse("https://public-dns.info/nameservers.csv").ToList(),
             new PingBenchmark(), this);
+
+        GraphViewModel = new GraphViewModel();
         
         // Create the user configuration
         InitializeNetworkAdapters();
@@ -25,11 +27,7 @@ public class MainWindowViewModel : ViewModelBase
     public NetworkAdapters NetworkAdapters { get; set; }
     public ViewModelBase NameserverListViewModel { get; }
 
-    public GraphViewModel? ScatterPlotViewModel
-    {
-        get => _scatterPlotViewModel;
-        set => this.RaiseAndSetIfChanged(ref _scatterPlotViewModel, value);
-    }
+    public GraphViewModel GraphViewModel { get; set; }
 
     void InitializeNetworkAdapters()
     {

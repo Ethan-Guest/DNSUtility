@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             x:Class="DNSUtility.Ui.Views.ScattPlotView">
+             x:Class="DNSUtility.Ui.Views.GraphView">
     
     <Border CornerRadius="10">
-        <ScottPlot:AvaPlot Name="ScattPlot" Background="{DynamicResource BackgroundDark}" Content="{Binding ScatterPlot}"></ScottPlot:AvaPlot>
+        <ScottPlot:AvaPlot Name="ScattPlot" Content="{Binding Graph}"></ScottPlot:AvaPlot>
     </Border>
     
 </UserControl>
