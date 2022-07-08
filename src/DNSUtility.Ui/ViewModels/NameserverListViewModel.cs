@@ -66,8 +66,9 @@ public class NameserverListViewModel : ViewModelBase
                 // TODO Call correct services
                 var applyDns = new ApplyDns();
                 if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                    applyDns.ApplyPrimary(SelectedNameserver,
-                        MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                    if (SelectedNameserver != null)
+                        applyDns.ApplyPrimary(SelectedNameserver.IpAddress,
+                            MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
 
         this.WhenAnyValue(x => x.SelectedNameserver)

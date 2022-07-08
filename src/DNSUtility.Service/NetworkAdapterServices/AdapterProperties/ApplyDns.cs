@@ -1,40 +1,43 @@
 ﻿using System.Diagnostics;
 using System.Net.NetworkInformation;
-using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 
 public class ApplyDns : IApplyDns
 {
-    public void ApplyPrimary(Nameserver nameserver, NetworkInterface adapter)
+    // Apply primary: interface ip set dns "interfacename" static x.x.x.x
+    // Apply secondary: interface ip ADD dns "interfacename" x.x.x.x index=2
+    // Reset both: interface ip set dns "interfacename" DHCP
+
+    // Apply the preferred DNS entry
+    public void ApplyPrimary(string ipAddress, NetworkInterface adapter)
     {
-        // TODO switch "ethernet" to adapter name
-        var args = $"interface ip set dns \"ethernet\" static {nameserver.IpAddress}";
+        var args =
+            $"interface ip set dns \"{adapter.Name}\" static {ipAddress}"; // To apply the preferred dns configuration, set the static ip address
         RunNetshProcess(args);
     }
 
-    public void ApplySecondary(Nameserver nameserver, NetworkInterface adapter)
+    // Apply the alternate DNS entry
+    public void ApplySecondary(string ipAddress, NetworkInterface adapter)
     {
-        // TODO
+        var args =
+            $"interface ip add dns \"{adapter.Name}\" {ipAddress} index=2"; // To apply the alternate dns, ADD a dns configuration entry
+        RunNetshProcess(args);
     }
 
-    public void ResetPrimary(Nameserver nameserver, NetworkInterface adapter)
+    public void ResetAll(string ipAddress, NetworkInterface adapter)
     {
-        // TODO
+        var args =
+            $"interface ip set dns \"{adapter.Name}\" DHCP"; // Specifying the DHCP parameter will reset all adapter entries to use dynamic host configuration protocol (default)
+        RunNetshProcess(args);
     }
 
-    public void ResetSecondary(Nameserver nameserver, NetworkInterface adapter)
+    /// <summary>
+    ///     Runs the netsh.exe command tool in windows with provided arguments
+    /// </summary>
+    /// <param name="args">The command to run in netsh. Expecting apply or reset DNS configuration.</param>
+    private void RunNetshProcess(string args)
     {
-        // TODO
-    }
-
-    public void ResetAll(Nameserver nameserver, NetworkInterface adapter)
-    {
-        // TODO
-    }
-
-    private void RunNetshProcess(string arguments) // TODO Move to bottom
-    {
-        Process.Start("netsh.exe", arguments);
+        Process.Start("netsh.exe", args);
     }
 }
