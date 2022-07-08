@@ -1,17 +1,40 @@
-﻿using System.Net.NetworkInformation;
-using DNSUtility.Domain;
+﻿using System.Diagnostics;
+using System.Net.NetworkInformation;
+using DNSUtility.Domain.AppModels;
 
-namespace DNSUtility.Service.NetworkAdapterServices;
+namespace DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 
 public class ApplyDns : IApplyDns
 {
-    public void ApplyPreferredDns(Nameserver nameserver, NetworkInterface adapter)
+    public void ApplyPrimary(Nameserver nameserver, NetworkInterface adapter)
     {
-        // Set the dns server
+        // TODO switch "ethernet" to adapter name
+        var args = $"interface ip set dns \"ethernet\" static {nameserver.IpAddress}";
+        RunNetshProcess(args);
     }
 
-    public void ApplyAlternateDns(Nameserver nameserver, NetworkInterface adapter)
-    { 
-        // Set the dns server
+    public void ApplySecondary(Nameserver nameserver, NetworkInterface adapter)
+    {
+        // TODO
+    }
+
+    public void ResetPrimary(Nameserver nameserver, NetworkInterface adapter)
+    {
+        // TODO
+    }
+
+    public void ResetSecondary(Nameserver nameserver, NetworkInterface adapter)
+    {
+        // TODO
+    }
+
+    public void ResetAll(Nameserver nameserver, NetworkInterface adapter)
+    {
+        // TODO
+    }
+
+    private void RunNetshProcess(string arguments) // TODO Move to bottom
+    {
+        Process.Start("netsh.exe", arguments);
     }
 }

@@ -1,5 +1,5 @@
 using System.Linq;
-using DNSUtility.Domain.AppModels;
+using System.Net.NetworkInformation;
 using DNSUtility.Domain.UserModels;
 using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
@@ -16,8 +16,7 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel(IParser parser)
     {
         // Initialize the users configuration
-        InitializeUserInfo();
-        InitializeNetworkAdapters();
+        InitializeUserSettings();
 
         // Create the nameserver list viewmodel
         NameserverListViewModel = new NameserverListViewModel(
@@ -30,7 +29,7 @@ public class MainWindowViewModel : ViewModelBase
     public UserSettings UserSettings { get; set; }
 
     // The users network adapters
-    public NetworkAdapters NetworkAdapters { get; set; }
+    /*public NetworkAdapters NetworkAdapters { get; set; }*/
 
     // The nameserver list view model
     public ViewModelBase NameserverListViewModel { get; }
@@ -43,21 +42,13 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // Initialize the users system info. (Country, language) TODO: Add test to check behavior when country / language is null
-    private void InitializeUserInfo()
+    private void InitializeUserSettings()
     {
-        ICountryInfo countryInfo = new UserCountryCode();
+        var countryInfo = new UserCountryCode();
+        var activeInterface = new LoadNetworkInterfaces();
+        var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 
-        UserSettings = new UserSettings(countryInfo.GetCountryCode());
-    }
-
-    // Initialize the users network adapters
-    void InitializeNetworkAdapters()
-    {
-        // Create the interface for retrieving all network adapters
-        var networkInterfaces = new LoadNetworkInterfaces();
-
-        // Create the network adapters class
-        NetworkAdapters = new NetworkAdapters(networkInterfaces.GetAllNetworkInterfaces(),
-            networkInterfaces.GetActiveNetworkInterface(NetworkAdapters.NetworkInterfaces));
+        UserSettings = new UserSettings(countryInfo.GetCountryCode(), networkInterfaces,
+            activeInterface.GetActiveNetworkInterface(networkInterfaces));
     }
 }

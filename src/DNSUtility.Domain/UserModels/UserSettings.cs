@@ -1,4 +1,5 @@
-﻿using DNSUtility.Domain.AppModels;
+﻿using System.Net.NetworkInformation;
+using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Domain.UserModels;
 
@@ -7,12 +8,16 @@ namespace DNSUtility.Domain.UserModels;
 /// </summary>
 public class UserSettings
 {
-    public UserSettings(CountryInfo countryInfo)
+    public UserSettings(CountryInfo countryInfo, NetworkInterface[] networkInterfaces,
+        NetworkInterface? activeInterface)
     {
         Country = countryInfo.Country;
         Language = countryInfo.Language;
         if (countryInfo.Country == string.Empty) Country = "US";
         if (countryInfo.Language == string.Empty) Language = "en";
+
+        // Create the network adapters class
+        NetworkAdapters = new NetworkAdapters(networkInterfaces, activeInterface);
     }
 
     /// <summary>
@@ -24,4 +29,6 @@ public class UserSettings
     ///     Language abbreviation. e.g. EN, ES, FR,
     /// </summary>
     public string Language { get; set; }
+
+    public NetworkAdapters NetworkAdapters { get; set; }
 }

@@ -4,14 +4,9 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
-using Avalonia.Collections;
-using Avalonia.Controls;
-using DNSUtility.Domain;
 using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
-using DNSUtility.Service.NetworkAdapterServices;
 using DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
-using DynamicData.Binding;
 using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -20,14 +15,15 @@ public class NameserverListViewModel : ViewModelBase
 {
     private NameserverViewModel? _selectedNameserver;
 
-    public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark, MainWindowViewModel mainWindowViewModel)
+    public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark,
+        MainWindowViewModel mainWindowViewModel)
     {
         // Get access to main view model instance
         MainViewModel = mainWindowViewModel;
-        
+
         // Initialize the list of nameservers for the UI
         Nameservers = new ObservableCollection<NameserverViewModel>();
-        
+
         // Convert list of nameservers to a list of NameserverViewModels
         foreach (var nameserver in nameservers)
         {
@@ -63,14 +59,15 @@ public class NameserverListViewModel : ViewModelBase
                         }
                     }).Start();
             });
-        
+
         ApplySelectedNameserver = ReactiveCommand.Create(
             () =>
             {
+                // TODO Call correct services
                 var applyDns = new ApplyDns();
-                if (MainViewModel.NetworkAdapters.ActiveInterface != null)
-                    applyDns.ApplyPreferredDns(SelectedNameserver?.IpAddress,
-                        MainViewModel.NetworkAdapters.ActiveInterface);
+                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                    applyDns.ApplyPrimary(SelectedNameserver,
+                        MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
 
         this.WhenAnyValue(x => x.SelectedNameserver)
@@ -78,19 +75,10 @@ public class NameserverListViewModel : ViewModelBase
             .Subscribe(CreatePlot);
     }
 
-    private async void CreatePlot(NameserverViewModel? nameserver)
-    {
-        if (nameserver == null)
-        {
-            return;
-        }
-        MainViewModel.GraphViewModel = new GraphViewModel(nameserver);
-    }
-    
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
-    
+
     public ReactiveCommand<Unit, Unit> ApplySelectedNameserver { get; set; }
 
 
@@ -101,4 +89,14 @@ public class NameserverListViewModel : ViewModelBase
     }
 
     public MainWindowViewModel MainViewModel { get; set; }
+
+    private async void CreatePlot(NameserverViewModel? nameserver)
+    {
+        if (nameserver == null)
+        {
+            return;
+        }
+
+        MainViewModel.GraphViewModel = new GraphViewModel(nameserver);
+    }
 }
