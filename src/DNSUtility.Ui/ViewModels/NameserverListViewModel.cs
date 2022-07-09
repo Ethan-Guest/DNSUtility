@@ -60,14 +60,26 @@ public class NameserverListViewModel : ViewModelBase
                     }).Start();
             });
 
-        ApplySelectedNameserver = ReactiveCommand.Create(
+        // TODO: Merge the following TWO commands into ONE function with different parameters 
+
+        // Command for applying primary dns server
+        ApplyPrimary = ReactiveCommand.Create(
             () =>
             {
-                // TODO Call correct services
                 var applyDns = new ApplyDns();
                 if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
                     if (SelectedNameserver != null)
                         applyDns.ApplyPrimary(SelectedNameserver.IpAddress,
+                            MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+            });
+        // Command for applying secondary dns server
+        ApplySecondary = ReactiveCommand.Create(
+            () =>
+            {
+                var applyDns = new ApplyDns();
+                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                    if (SelectedNameserver != null)
+                        applyDns.ApplySecondary(SelectedNameserver.IpAddress,
                             MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
 
@@ -80,7 +92,9 @@ public class NameserverListViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
 
-    public ReactiveCommand<Unit, Unit> ApplySelectedNameserver { get; set; }
+    public ReactiveCommand<Unit, Unit> ApplyPrimary { get; set; }
+
+    public ReactiveCommand<Unit, Unit> ApplySecondary { get; set; }
 
 
     public NameserverViewModel? SelectedNameserver
