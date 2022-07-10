@@ -41,8 +41,7 @@ public class NameserverListViewModel : ViewModelBase
                         // Run the test 5 times
                         for (int i = 0; i < 5; i++)
                         {
-                            ushort ping = pingBenchmark.RunBenchmark(nameserver.IpAddress);
-
+                            var ping = pingBenchmark.Run(nameserver.IpAddress);
 
                             // Set the reply as the latest ping
                             nameserver.LatestPing = ping;
@@ -57,11 +56,13 @@ public class NameserverListViewModel : ViewModelBase
                                 break;
                             }*/
                         }
+
+                        // Calculate the average ping so it can be displayed in the view
+                        nameserver.CalculateAveragePing();
                     }).Start();
             });
 
         // TODO: Merge the following TWO commands into ONE function with different parameters 
-
         // Command for applying primary dns server
         ApplyPrimary = ReactiveCommand.Create(
             () =>

@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using DNSUtility.Domain;
+﻿using System.Collections.Generic;
 using DNSUtility.Domain.AppModels;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverViewModel : ViewModelBase
 {
+    private ushort _averagePing;
     private string _country;
 
     private bool _dnssec;
 
     private string _ipAddress;
 
-    private string _name;
-
-    private decimal _reliability;
-
-    private List<ushort> _pings;
-    
     private ushort _latestPing;
 
-    private ushort _averagePing;
+    private string _name;
+
+    private List<ushort> _pings;
+
+    private decimal _reliability;
 
     public NameserverViewModel(Nameserver nameserver)
     {
@@ -38,6 +32,7 @@ public class NameserverViewModel : ViewModelBase
         AveragePing = 0;
         Pings = new List<ushort>();
     }
+
     public string IpAddress
     {
         get => _ipAddress;
@@ -73,11 +68,13 @@ public class NameserverViewModel : ViewModelBase
         get => _pings;
         set => this.RaiseAndSetIfChanged(ref _pings, value);
     }
+
     public ushort LatestPing
     {
         get => _latestPing;
         set => this.RaiseAndSetIfChanged(ref _latestPing, value);
     }
+
     public ushort AveragePing
     {
         get => _averagePing;
@@ -92,6 +89,9 @@ public class NameserverViewModel : ViewModelBase
         {
             AveragePing += ping;
         }
-        AveragePing = (ushort)(AveragePing / Pings.Count);
+
+        if (AveragePing != 0) AveragePing = (ushort)(AveragePing / Pings.Count);
+
+        LatestPing = AveragePing;
     }
 }
