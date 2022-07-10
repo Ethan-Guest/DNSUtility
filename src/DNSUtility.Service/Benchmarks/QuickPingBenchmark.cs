@@ -1,11 +1,10 @@
 ﻿using System.Net.NetworkInformation;
-using DNSUtility.Domain;
 
 namespace DNSUtility.Service.Benchmarks;
 
-public class PingBenchmark : IBenchmark
+public class QuickPingBenchmark : IBenchmark
 {
-    public ushort RunBenchmark(string address)
+    public ushort Run(string address)
     {
         // Create ping sender
         var pingSender = new Ping();

@@ -21,7 +21,7 @@ public class MainWindowViewModel : ViewModelBase
         // Create the nameserver list viewmodel
         NameserverListViewModel = new NameserverListViewModel(
             parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
-            new PingBenchmark(), this);
+            new StandardPingBenchmark(), this);
     }
 
 

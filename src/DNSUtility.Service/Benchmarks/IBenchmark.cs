@@ -1,8 +1,6 @@
-﻿using DNSUtility.Domain;
-
-namespace DNSUtility.Service.Benchmarks;
+﻿namespace DNSUtility.Service.Benchmarks;
 
 public interface IBenchmark
 {
-    ushort RunBenchmark(string address);
+    ushort Run(string address);
 }
