@@ -1,6 +1,8 @@
-﻿namespace DNSUtility.Service.Benchmarks;
+﻿using System.Net.NetworkInformation;
+
+namespace DNSUtility.Service.Benchmarks;
 
 public interface IBenchmark
 {
-    ushort Run(string address);
+    PingReply Run(string address);
 }
