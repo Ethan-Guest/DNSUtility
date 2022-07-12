@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
@@ -31,19 +32,30 @@ public class NameserverListViewModel : ViewModelBase
             Nameservers.Add(nameserverViewModel);
         }
 
-        RunDnsTest = ReactiveCommand.CreateFromTask(() =>
-        {
-            // Create a list of tasks
-            var benchmarkTasks = new List<Task>();
+        RunDnsTest = ReactiveCommand.Create(
+            () =>
+            {
+                foreach (var nameserver in Nameservers)
+                    // Create a new thread for each test
+                    new Thread(() =>
+                    {
+                        // Run the test 5 times
+                        for (var i = 0; i < 5; i++)
+                        {
+                            var ping = pingBenchmark.Run(nameserver.IpAddress);
 
-            // Create a benchmark task for each nameserver
-            foreach (var nameserver in Nameservers) benchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
+                            // Set the reply as the latest ping
+                            nameserver.LatestPing = ping;
 
-            RemovePoorQualityNameservers();
+                            // Add the reply to the list of pings
+                            nameserver.Pings.Add(ping);
+                        }
 
-            // Wait for all benchmarks to be completed
-            return Task.WhenAll(benchmarkTasks.ToArray());
-        });
+                        // Calculate the average ping so it can be displayed in the view
+                        nameserver.CalculateAveragePing();
+                    }).Start();
+                RemovePoorQualityNameservers();
+            });
 
         // TODO: Merge the following TWO commands into ONE function with different parameters 
         // Command for applying primary dns server
@@ -66,11 +78,21 @@ public class NameserverListViewModel : ViewModelBase
                         applyDns.ApplySecondary(SelectedNameserver.IpAddress,
                             MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
+        ResetDns = ReactiveCommand.Create(
+            () =>
+            {
+                var applyDns = new ApplyDns();
+                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                    if (SelectedNameserver != null)
+                        applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+            });
 
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(CreatePlot);
     }
+
+    public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
 

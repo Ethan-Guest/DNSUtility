@@ -25,7 +25,7 @@ public class ApplyDns : IApplyDns
         RunNetshProcess(args);
     }
 
-    public void ResetAll(string ipAddress, NetworkInterface adapter)
+    public void ResetAll(NetworkInterface adapter)
     {
         var args =
             $"interface ip set dns \"{adapter.Name}\" DHCP"; // Specifying the DHCP parameter will reset all adapter entries to use dynamic host configuration protocol (default)

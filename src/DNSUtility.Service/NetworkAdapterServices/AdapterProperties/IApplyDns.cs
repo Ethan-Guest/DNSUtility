@@ -6,5 +6,5 @@ public interface IApplyDns
 {
     void ApplyPrimary(string ipAddress, NetworkInterface adapter);
     void ApplySecondary(string ipAddress, NetworkInterface adapter);
-    void ResetAll(string ipAddress, NetworkInterface adapter);
+    void ResetAll(NetworkInterface adapter);
 }
