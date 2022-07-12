@@ -20,6 +20,7 @@
         <DataGrid Margin="40,0,0,0" Name="MyDataGrid" Items="{Binding Nameservers}" SelectedItem="{Binding SelectedNameserver}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Status" Binding="{Binding StatusIcon}" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}" />

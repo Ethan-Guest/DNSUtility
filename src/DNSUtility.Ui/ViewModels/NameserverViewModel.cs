@@ -21,6 +21,8 @@ public class NameserverViewModel : ViewModelBase
 
     private decimal _reliability;
 
+    private ushort _status;
+
     public NameserverViewModel(Nameserver nameserver)
     {
         // Initialize nameserver properties
@@ -79,6 +81,12 @@ public class NameserverViewModel : ViewModelBase
     {
         get => _averagePing;
         set => this.RaiseAndSetIfChanged(ref _averagePing, value);
+    }
+
+    public ushort Status
+    {
+        get => _status;
+        set => this.RaiseAndSetIfChanged(ref _status, value);
     }
 
     // TODO move to service
