@@ -21,7 +21,7 @@ public class NameserverViewModel : ViewModelBase
 
     private decimal _reliability;
 
-    private ushort _status;
+    private string _statusIcon;
 
     public NameserverViewModel(Nameserver nameserver)
     {
@@ -33,6 +33,9 @@ public class NameserverViewModel : ViewModelBase
         Reliability = nameserver.Reliability;
         AveragePing = 0;
         Pings = new List<ushort>();
+
+        // Set the default color (gray)
+        StatusIcon = "#858585";
     }
 
     public string IpAddress
@@ -83,11 +86,12 @@ public class NameserverViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _averagePing, value);
     }
 
-    public ushort Status
+    public string StatusIcon
     {
-        get => _status;
-        set => this.RaiseAndSetIfChanged(ref _status, value);
+        get => _statusIcon;
+        set => this.RaiseAndSetIfChanged(ref _statusIcon, value);
     }
+
 
     // TODO move to service
     // A method for calculating the average ping of the name server
@@ -101,5 +105,15 @@ public class NameserverViewModel : ViewModelBase
         if (AveragePing != 0) AveragePing = (ushort)(AveragePing / Pings.Count);
 
         LatestPing = AveragePing;
+    }
+
+    public void UpdateStatusIcon()
+    {
+        if (AveragePing > 0 && AveragePing <= 30)
+            StatusIcon = "#31FF7D";
+        else if (AveragePing > 30 && AveragePing <= 100)
+            StatusIcon = "#FFAA00";
+        else
+            StatusIcon = "#FF264B";
     }
 }
