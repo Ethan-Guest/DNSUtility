@@ -52,6 +52,7 @@ public class NameserverListViewModel : ViewModelBase
                 // Wait until all the tasks have completed
                 Task.WaitAll(BenchmarkTasks.ToArray());
                 RemovePoorQualityNameservers();
+
                 BenchmarkInProgress = false;
             });
 
@@ -120,6 +121,8 @@ public class NameserverListViewModel : ViewModelBase
     {
         var t = Task.Run(() =>
         {
+            Task.Delay(10000);
+
             for (var j = 0; j < 5; j++)
             {
                 var ping = pingBenchmark.Run(nameserver.IpAddress);
