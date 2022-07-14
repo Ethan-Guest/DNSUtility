@@ -14,6 +14,7 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverListViewModel : ViewModelBase
 {
+    private bool _benchmarkInProgress;
     private NameserverViewModel? _selectedNameserver;
 
     public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark,
@@ -32,29 +33,26 @@ public class NameserverListViewModel : ViewModelBase
             Nameservers.Add(nameserverViewModel);
         }
 
+        BenchmarkTasks = new List<Task>();
+
         RunDnsTest = ReactiveCommand.Create(
             () =>
             {
+                // Notify the UI that a benchmark is in progress
+                BenchmarkInProgress = true;
+
+                // Use half of the users resources to run the test
+                ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
+                ThreadPool.SetMinThreads(workerThreads / 2, completionPortThreads / 2);
+
+                // Create a task for each nameserver test
                 foreach (var nameserver in Nameservers)
-                    // Create a new thread for each test
-                    new Thread(() =>
-                    {
-                        // Run the test 5 times
-                        for (var i = 0; i < 5; i++)
-                        {
-                            var ping = pingBenchmark.Run(nameserver.IpAddress);
+                    BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
 
-                            // Set the reply as the latest ping
-                            nameserver.LatestPing = ping;
-
-                            // Add the reply to the list of pings
-                            nameserver.Pings.Add(ping);
-                        }
-
-                        // Calculate the average ping so it can be displayed in the view
-                        nameserver.CalculateAveragePing();
-                    }).Start();
+                // Wait until all the tasks have completed
+                Task.WaitAll(BenchmarkTasks.ToArray());
                 RemovePoorQualityNameservers();
+                BenchmarkInProgress = false;
             });
 
         // TODO: Merge the following TWO commands into ONE function with different parameters 
@@ -92,6 +90,14 @@ public class NameserverListViewModel : ViewModelBase
             .Subscribe(CreatePlot);
     }
 
+    public List<Task> BenchmarkTasks { get; set; }
+
+    public bool BenchmarkInProgress
+    {
+        get => _benchmarkInProgress;
+        set => this.RaiseAndSetIfChanged(ref _benchmarkInProgress, value);
+    }
+
     public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
     public ObservableCollection<NameserverViewModel> Nameservers { get; }
@@ -101,13 +107,6 @@ public class NameserverListViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ApplyPrimary { get; set; }
 
     public ReactiveCommand<Unit, Unit> ApplySecondary { get; set; }
-
-
-    // The minimum average ping found in the nameserver list. Used to determine the status of the nameserver
-    public int MinPingAverage { get; set; }
-
-    // The maximum average ping found in the nameserver list. Used to determine the status of the nameserver
-    public int MaxPingAverage { get; set; }
 
     public NameserverViewModel? SelectedNameserver
     {
@@ -119,7 +118,7 @@ public class NameserverListViewModel : ViewModelBase
 
     private Task BenchmarkNameserver(NameserverViewModel nameserver, IBenchmark pingBenchmark)
     {
-        return Task.Run(() =>
+        var t = Task.Run(() =>
         {
             for (var j = 0; j < 5; j++)
             {
@@ -133,12 +132,9 @@ public class NameserverListViewModel : ViewModelBase
 
                 // Calculate the average ping so it can be displayed in the view
                 nameserver.CalculateAveragePing();
-
-                if (nameserver.AveragePing == 0) return Task.CompletedTask;
             }
-
-            return Task.CompletedTask;
         });
+        return Task.FromResult(t);
     }
 
     /// <summary>
@@ -149,10 +145,6 @@ public class NameserverListViewModel : ViewModelBase
         for (var i = 0; i < Nameservers.Count; i++)
             if (Nameservers[i].LatestPing == 0)
                 Nameservers.RemoveAt(i);
-    }
-
-    private void RunTests(IBenchmark pingBenchmark, NameserverViewModel nameserver)
-    {
     }
 
     private async void CreatePlot(NameserverViewModel? nameserver)
