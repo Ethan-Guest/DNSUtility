@@ -18,6 +18,9 @@ public class MainWindowViewModel : ViewModelBase
         // Initialize the users configuration
         InitializeUserSettings();
 
+        // Initialize settings panel
+        SettingsPanelViewModel = new SettingsPanelViewModel();
+
         // Create the nameserver list viewmodel
         NameserverListViewModel = new NameserverListViewModel(
             parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
@@ -33,6 +36,9 @@ public class MainWindowViewModel : ViewModelBase
 
     // The nameserver list view model
     public ViewModelBase NameserverListViewModel { get; }
+
+    // The settings panel view model
+    public ViewModelBase SettingsPanelViewModel { get; }
 
     // The ping graph view model
     public GraphViewModel GraphViewModel
@@ -51,9 +57,8 @@ public class MainWindowViewModel : ViewModelBase
         UserSettings = new UserSettings(countryInfo.GetCountryCode(), networkInterfaces,
             activeInterface.GetActiveNetworkInterface(networkInterfaces));
     }
+
     // Create a new plot from the main view model
-
-
     public void CreatePlot(NameserverViewModel? nameserver)
     {
         if (nameserver == null) return;

@@ -39,14 +39,16 @@
                        FontSize="22" />
 
             <!-- Nameserver list panel -->
-            <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="1" Content="{Binding NameserverListViewModel}" />
+            <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"
+                            Content="{Binding NameserverListViewModel}" />
             
             <!-- Graph panel -->
-            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="30" Content="{Binding GraphViewModel}" />
+            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Padding="20"
+                            Content="{Binding GraphViewModel}" />
             
             <!-- Info panel -->
-            <ContentControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Margin="30" Content="{Binding InfoPanelViewModel}" />
-
+            <ContentControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Content="{Binding SettingsPanelViewModel}"
+                            Padding="30" />
 
         </Grid>
     </Panel>

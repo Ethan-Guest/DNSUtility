@@ -19,6 +19,7 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var parser = new NameserverCsvParser();
+
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(parser)
