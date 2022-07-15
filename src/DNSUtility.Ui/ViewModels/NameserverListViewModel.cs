@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace DNSUtility.Ui.ViewModels;
 public class NameserverListViewModel : ViewModelBase
 {
     private bool _benchmarkInProgress;
+    private int _completedTaskCounter;
+    private ObservableCollection<NameserverViewModel> _nameservers;
     private NameserverViewModel? _selectedNameserver;
 
     public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark,
@@ -35,11 +38,19 @@ public class NameserverListViewModel : ViewModelBase
 
         BenchmarkTasks = new List<Task>();
 
+        Lock = new object();
+
+        CompletedTaskCounter = 0;
+
         RunDnsTest = ReactiveCommand.Create(
             () =>
             {
                 // Notify the UI that a benchmark is in progress
                 BenchmarkInProgress = true;
+
+                // Reset task fields
+                BenchmarkTasks.Clear();
+                CompletedTaskCounter = 0;
 
                 // Use half of the users resources to run the test
                 ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
@@ -49,11 +60,13 @@ public class NameserverListViewModel : ViewModelBase
                 foreach (var nameserver in Nameservers)
                     BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
 
-                // Wait until all the tasks have completed
-                Task.WaitAll(BenchmarkTasks.ToArray());
-                RemovePoorQualityNameservers();
 
-                BenchmarkInProgress = false;
+                // Wait until all the tasks have completed
+                //Task.WaitAll(BenchmarkTasks.ToArray());
+
+                //UpdateListView();
+
+                //BenchmarkInProgress = false;
             });
 
         // TODO: Merge the following TWO commands into ONE function with different parameters 
@@ -89,9 +102,22 @@ public class NameserverListViewModel : ViewModelBase
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(CreatePlot);
+
+        this.WhenAnyValue(x => x.CompletedTaskCounter)
+            .Throttle(TimeSpan.FromMilliseconds(1000))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(UpdateListView);
     }
 
     public List<Task> BenchmarkTasks { get; set; }
+
+    public int CompletedTaskCounter
+    {
+        get => _completedTaskCounter;
+        set => this.RaiseAndSetIfChanged(ref _completedTaskCounter, value);
+    }
+
+    public object Lock { get; set; }
 
     public bool BenchmarkInProgress
     {
@@ -101,7 +127,11 @@ public class NameserverListViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
-    public ObservableCollection<NameserverViewModel> Nameservers { get; }
+    public ObservableCollection<NameserverViewModel> Nameservers
+    {
+        get => _nameservers;
+        set => this.RaiseAndSetIfChanged(ref _nameservers, value);
+    }
 
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
 
@@ -117,12 +147,28 @@ public class NameserverListViewModel : ViewModelBase
 
     public MainWindowViewModel MainViewModel { get; set; }
 
+    private void UpdateListView(int completedTaskCounter)
+    {
+        if (BenchmarkTasks.Count != 0)
+        {
+            if (completedTaskCounter >= BenchmarkTasks.Count)
+            {
+                BenchmarkInProgress = false;
+                BenchmarkTasks.Clear();
+                completedTaskCounter = 0;
+            }
+
+            // Sort collection and filter out poor quality nameservers
+            Nameservers =
+                new ObservableCollection<NameserverViewModel>(Nameservers.OrderBy(o => o.AveragePing)
+                    .Where(p => p.LatestPing != 0));
+        }
+    }
+
     private Task BenchmarkNameserver(NameserverViewModel nameserver, IBenchmark pingBenchmark)
     {
-        var t = Task.Run(() =>
+        var task = Task.Run(() =>
         {
-            Task.Delay(10000);
-
             for (var j = 0; j < 5; j++)
             {
                 var ping = pingBenchmark.Run(nameserver.IpAddress);
@@ -130,27 +176,29 @@ public class NameserverListViewModel : ViewModelBase
                 // Set the reply as the latest ping
                 nameserver.LatestPing = ping;
 
+                // Check if the server did not reply and return
+                if (ping == 0) break;
+
                 // Add the reply to the list of pings
                 nameserver.Pings.Add(ping);
 
                 // Calculate the average ping so it can be displayed in the view
                 nameserver.CalculateAveragePing();
+
+                nameserver.UpdateStatusIcon();
+            }
+        }).ContinueWith(t =>
+        {
+            lock (Lock)
+            {
+                CompletedTaskCounter++;
             }
         });
-        return Task.FromResult(t);
+
+        return task;
     }
 
-    /// <summary>
-    ///     A method to remove the poor quality nameservers.
-    /// </summary>
-    private void RemovePoorQualityNameservers()
-    {
-        for (var i = 0; i < Nameservers.Count; i++)
-            if (Nameservers[i].LatestPing == 0)
-                Nameservers.RemoveAt(i);
-    }
-
-    private async void CreatePlot(NameserverViewModel? nameserver)
+    private void CreatePlot(NameserverViewModel? nameserver)
     {
         if (nameserver == null)
         {
