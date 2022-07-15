@@ -51,8 +51,14 @@
             <ProgressBar IsIndeterminate="{Binding BenchmarkInProgress}" Width="300" Grid.ColumnSpan="4"
                          HorizontalAlignment="Center" />
             <Button Grid.Row="1" Grid.Column="0" Command="{Binding RunDnsTest}" Margin="10,0">Run DNS Test</Button>
-            <Button Grid.Row="1" Grid.Column="1" Command="{Binding ApplyPrimary}" Margin="10,0">Apply Primary</Button>
-            <Button Grid.Row="1" Grid.Column="2" Command="{Binding ApplySecondary}" Margin="10,0">Apply Alternate</Button>
+            <Button Grid.Row="1" Grid.Column="1" Command="{Binding ApplyDnsCommand}" CommandParameter="primary"
+                    Margin="10,0">
+                Apply Primary
+            </Button>
+            <Button Grid.Row="1" Grid.Column="2" Command="{Binding ApplyDnsCommand}" CommandParameter="secondary"
+                    Margin="10,0">
+                Apply Alternate
+            </Button>
             <Button Grid.Row="1" Grid.Column="3" Command="{Binding ResetDns}" Margin="10,0">Reset</Button>
         </Grid>
         

@@ -51,4 +51,12 @@ public class MainWindowViewModel : ViewModelBase
         UserSettings = new UserSettings(countryInfo.GetCountryCode(), networkInterfaces,
             activeInterface.GetActiveNetworkInterface(networkInterfaces));
     }
+    // Create a new plot from the main view model
+
+
+    public void CreatePlot(NameserverViewModel? nameserver)
+    {
+        if (nameserver == null) return;
+        GraphViewModel = new GraphViewModel(nameserver);
+    }
 }

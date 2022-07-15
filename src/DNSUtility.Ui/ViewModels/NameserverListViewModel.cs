@@ -15,33 +15,39 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverListViewModel : ViewModelBase
 {
+    // Backing fields
     private bool _benchmarkInProgress;
     private int _completedTaskCounter;
-    private ObservableCollection<NameserverViewModel> _nameservers;
+    private ObservableCollection<NameserverViewModel>? _nameservers;
+
     private NameserverViewModel? _selectedNameserver;
 
+    // Constructor takes in a list of nameserver models, the benchmark object, and a reference to the main ViewModel
+    // TODO switch the ping benchmark to the selected benchmark type from user settings. (Quick, Standard)
     public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark,
         MainWindowViewModel mainWindowViewModel)
     {
-        // Get access to main view model instance
+        // Store access to main view model instance
         MainViewModel = mainWindowViewModel;
 
         // Initialize the list of nameservers for the UI
         Nameservers = new ObservableCollection<NameserverViewModel>();
-
-        // Convert list of nameservers to a list of NameserverViewModels
         foreach (var nameserver in nameservers)
         {
             var nameserverViewModel = new NameserverViewModel(nameserver);
             Nameservers.Add(nameserverViewModel);
         }
 
+        // List of tasks to be run during test
         BenchmarkTasks = new List<Task>();
 
+        // Shared lock object for use in test
         Lock = new object();
 
+        // Count the number of completed tasks
         CompletedTaskCounter = 0;
 
+        // Command for running test
         RunDnsTest = ReactiveCommand.Create(
             () =>
             {
@@ -59,37 +65,33 @@ public class NameserverListViewModel : ViewModelBase
                 // Create a task for each nameserver test
                 foreach (var nameserver in Nameservers)
                     BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
-
-
-                // Wait until all the tasks have completed
-                //Task.WaitAll(BenchmarkTasks.ToArray());
-
-                //UpdateListView();
-
-                //BenchmarkInProgress = false;
             });
 
-        // TODO: Merge the following TWO commands into ONE function with different parameters 
-        // Command for applying primary dns server
-        ApplyPrimary = ReactiveCommand.Create(
-            () =>
+        // Command for applying nameserver to network adapter
+        ApplyDnsCommand = ReactiveCommand.Create<string>(
+            parameter =>
             {
                 var applyDns = new ApplyDns();
-                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                    if (SelectedNameserver != null)
-                        applyDns.ApplyPrimary(SelectedNameserver.IpAddress,
-                            MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+
+                if (SelectedNameserver != null)
+                    // 0 = primary
+                    if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+
+                        if (parameter == "primary")
+                        {
+                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                                applyDns.ApplyPrimary(SelectedNameserver.IpAddress,
+                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                        }
+                        else
+                        {
+                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                                applyDns.ApplySecondary(SelectedNameserver.IpAddress,
+                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                        }
             });
-        // Command for applying secondary dns server
-        ApplySecondary = ReactiveCommand.Create(
-            () =>
-            {
-                var applyDns = new ApplyDns();
-                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                    if (SelectedNameserver != null)
-                        applyDns.ApplySecondary(SelectedNameserver.IpAddress,
-                            MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-            });
+
+        // Command for resetting nameservers in network adapter
         ResetDns = ReactiveCommand.Create(
             () =>
             {
@@ -99,45 +101,37 @@ public class NameserverListViewModel : ViewModelBase
                         applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
 
+
+        // Rx property observers
+        // When the selected nameserver is changed, update the plot
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(CreatePlot);
+            .Subscribe(MainViewModel.CreatePlot);
 
+        // When the completed task counter is changed, update the list view
         this.WhenAnyValue(x => x.CompletedTaskCounter)
-            .Throttle(TimeSpan.FromMilliseconds(1000))
+            .Throttle(TimeSpan.FromMilliseconds(500))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(UpdateListView);
     }
 
+    // Properties
+    public MainWindowViewModel MainViewModel { get; set; }
     public List<Task> BenchmarkTasks { get; set; }
-
-    public int CompletedTaskCounter
-    {
-        get => _completedTaskCounter;
-        set => this.RaiseAndSetIfChanged(ref _completedTaskCounter, value);
-    }
-
     public object Lock { get; set; }
 
-    public bool BenchmarkInProgress
-    {
-        get => _benchmarkInProgress;
-        set => this.RaiseAndSetIfChanged(ref _benchmarkInProgress, value);
-    }
-
+    // Commands
+    public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
+    public ReactiveCommand<string, Unit> ApplyDnsCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
-    public ObservableCollection<NameserverViewModel> Nameservers
+
+    // Live UI properties
+    public ObservableCollection<NameserverViewModel>? Nameservers
     {
         get => _nameservers;
         set => this.RaiseAndSetIfChanged(ref _nameservers, value);
     }
-
-    public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
-
-    public ReactiveCommand<Unit, Unit> ApplyPrimary { get; set; }
-
-    public ReactiveCommand<Unit, Unit> ApplySecondary { get; set; }
 
     public NameserverViewModel? SelectedNameserver
     {
@@ -145,8 +139,21 @@ public class NameserverListViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
     }
 
-    public MainWindowViewModel MainViewModel { get; set; }
+    public bool BenchmarkInProgress
+    {
+        get => _benchmarkInProgress;
+        set => this.RaiseAndSetIfChanged(ref _benchmarkInProgress, value);
+    }
 
+    public int CompletedTaskCounter
+    {
+        get => _completedTaskCounter;
+        set => this.RaiseAndSetIfChanged(ref _completedTaskCounter, value);
+    }
+
+
+    // Methods
+    // Update the nameserver list in the UI
     private void UpdateListView(int completedTaskCounter)
     {
         if (BenchmarkTasks.Count != 0)
@@ -159,12 +166,14 @@ public class NameserverListViewModel : ViewModelBase
             }
 
             // Sort collection and filter out poor quality nameservers
-            Nameservers =
-                new ObservableCollection<NameserverViewModel>(Nameservers.OrderBy(o => o.AveragePing)
-                    .Where(p => p.LatestPing != 0));
+            if (Nameservers != null)
+                Nameservers =
+                    new ObservableCollection<NameserverViewModel>(Nameservers.OrderBy(o => o.AveragePing)
+                        .Where(p => p.LatestPing != 0));
         }
     }
 
+    // Run a benchmark test on the nameserver
     private Task BenchmarkNameserver(NameserverViewModel nameserver, IBenchmark pingBenchmark)
     {
         var task = Task.Run(() =>
@@ -196,15 +205,5 @@ public class NameserverListViewModel : ViewModelBase
         });
 
         return task;
-    }
-
-    private void CreatePlot(NameserverViewModel? nameserver)
-    {
-        if (nameserver == null)
-        {
-            return;
-        }
-
-        MainViewModel.GraphViewModel = new GraphViewModel(nameserver);
     }
 }
