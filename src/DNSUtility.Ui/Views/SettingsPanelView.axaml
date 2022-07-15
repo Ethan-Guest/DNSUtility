@@ -6,6 +6,41 @@
              x:Class="DNSUtility.Ui.Views.SettingsPanelView">
 
 
-    <Border Background="#2E2E48" CornerRadius="10" />
+    <Border Background="#2E2E48" CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="DNS Configuration"
+                       FontWeight="Bold" />
+
+            <TextBlock Grid.Row="1" Margin="0,30,0,0" HorizontalAlignment="Center" Text="Adapter" />
+            <ComboBox Grid.Row="2" Width="200" Height="30" Margin="15,5,0,0" HorizontalAlignment="Center"
+                      Items="{Binding Adapters}" />
+
+            <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Country" />
+            <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Text="Preferred Nameserver (Ipv4):" />
+            <TextBlock Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Text="Alternate Nameserver (Ipv4):" />
+
+            <TextBox Grid.Column="1" Grid.Row="4" Width="144" Height="24" Watermark="       .       .       ."
+                     HorizontalAlignment="Center" />
+
+
+        </Grid>
+
+    </Border>
+    
 
 </UserControl>

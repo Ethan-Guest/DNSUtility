@@ -31,7 +31,10 @@
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\DNSUtility.Domain\DNSUtility.Domain.csproj" />
-        <ProjectReference Include="..\DNSUtility.Service\DNSUtility.Service.csproj" />
+        <ProjectReference Include="..\DNSUtility.Domain\DNSUtility.Domain.csproj"/>
+        <ProjectReference Include="..\DNSUtility.Service\DNSUtility.Service.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Assets\Fonts\"/>
     </ItemGroup>
 </Project>

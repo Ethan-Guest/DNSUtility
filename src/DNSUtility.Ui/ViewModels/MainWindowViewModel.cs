@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using DNSUtility.Domain.UserModels;
@@ -19,12 +20,16 @@ public class MainWindowViewModel : ViewModelBase
         InitializeUserSettings();
 
         // Initialize settings panel
-        SettingsPanelViewModel = new SettingsPanelViewModel();
+        if (UserSettings != null)
+        {
+            SettingsPanelViewModel = new SettingsPanelViewModel(UserSettings, new List<string>());
 
-        // Create the nameserver list viewmodel
-        NameserverListViewModel = new NameserverListViewModel(
-            parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
-            new StandardPingBenchmark(), this);
+            // Create the nameserver list viewmodel
+            NameserverListViewModel = new NameserverListViewModel(
+                parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
+                new StandardPingBenchmark(), this);
+        }
+        // TODO handle usersettings null
     }
 
 

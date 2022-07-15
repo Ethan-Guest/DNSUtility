@@ -9,9 +9,7 @@
     <Application.Styles>
         <FluentTheme Mode="Dark" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
-        <Style Selector="DataGridCell">
-            <Setter Property="ClipToBounds" Value="False" />
-        </Style>
+        
     </Application.Styles>
     
     <Application.Resources>
@@ -20,6 +18,7 @@
         <SolidColorBrush x:Key="Foreground">#2E2E48</SolidColorBrush>
         <SolidColorBrush x:Key="ForegroundLighter">#353553</SolidColorBrush>
         
+
 
         
     </Application.Resources>
