@@ -32,7 +32,6 @@
 
             <!-- Header Title -->
             <TextBlock Text="DNS Utility"
-                       FontFamily="{DynamicResource JetbrainsMono}"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="40,0,0,0"
