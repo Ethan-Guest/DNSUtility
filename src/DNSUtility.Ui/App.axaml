@@ -26,12 +26,12 @@
         <SolidColorBrush x:Key="Foreground">#2E2E48</SolidColorBrush>
         <SolidColorBrush x:Key="ForegroundLighter">#353553</SolidColorBrush>
 
-        <Style Selector="TextBlock">
+        <!--<Style Selector="TextBlock">
             <Setter Property="FontSize" Value="10" />
             <Setter Property="FontWeight" Value="Regular" />
             <Setter Property="FontFamily" Value="Assets/Fonts/JetBrainsMono/JetBrainsMono-regular.ttf #JetBrains" />
 
-        </Style>
+        </Style>-->
 
 
     </Application.Resources>
