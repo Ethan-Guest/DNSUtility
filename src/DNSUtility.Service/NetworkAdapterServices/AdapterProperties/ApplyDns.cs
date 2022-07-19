@@ -38,6 +38,13 @@ public class ApplyDns : IApplyDns
     /// <param name="args">The command to run in netsh. Expecting apply or reset DNS configuration.</param>
     private void RunNetshProcess(string args)
     {
-        Process.Start("netsh.exe", args);
+        // Define the process starting info
+        var startInfo = new ProcessStartInfo("netsh.exe", args);
+        startInfo.CreateNoWindow = true;
+
+        // Create the process
+        var dnsServiceProcess = new Process();
+        dnsServiceProcess.StartInfo = startInfo;
+        dnsServiceProcess.Start();
     }
 }
