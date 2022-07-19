@@ -7,7 +7,7 @@
 
 
     <Border Background="#2E2E48" CornerRadius="10">
-        <Grid ShowGridLines="True">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="250" />
@@ -48,21 +48,26 @@
 
             <!--Primary DNS input-->
             <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Left"
-                       Text="Preferred DNS" />
+                       Text="IPV4 DNS" />
             <TextBox Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="144" Height="24"
-                     Watermark="       .       .       ."
+                     TextAlignment="Center"
+                     Watermark=".       .       ." Text="{Binding SelectedNameserver}"
                      HorizontalAlignment="Left" />
 
-            <!--Secondary DNS input-->
-            <TextBlock Grid.Column="1" Grid.Row="7" VerticalAlignment="Top" HorizontalAlignment="Left"
-                       Text="Alternate DNS" />
-            <TextBox Grid.Column="1" Grid.Row="7" VerticalAlignment="Bottom" Width="144" Height="24"
-                     Watermark="       .       .       ."
-                     HorizontalAlignment="Left" />
+            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="82" Height="30" Margin="153,0,0,0"
+                    Command="{Binding ApplyDnsCommand}" CommandParameter="primary">
+                Preferred
+            </Button>
+            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="78" Height="30" Margin="243,0,0,0"
+                    Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
+                Alternate
+            </Button>
 
-    
-
-
+            <!--Reset-->
+            <Button Grid.Column="1" Grid.Row="7" VerticalAlignment="Bottom" Width="78" Height="30" Margin="243,0,0,0"
+                    Command="{Binding UpdateCountryCommand}">
+                Alternate
+            </Button>
         </Grid>
 
     </Border>

@@ -67,30 +67,6 @@ public class NameserverListViewModel : ViewModelBase
                     BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
             });
 
-        // Command for applying nameserver to network adapter
-        ApplyDnsCommand = ReactiveCommand.Create<string>(
-            parameter =>
-            {
-                var applyDns = new ApplyDns();
-
-                if (SelectedNameserver != null)
-                    // 0 = primary
-                    if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-
-                        if (parameter == "primary")
-                        {
-                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                                applyDns.ApplyPrimary(SelectedNameserver.IpAddress,
-                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-                        }
-                        else
-                        {
-                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                                applyDns.ApplySecondary(SelectedNameserver.IpAddress,
-                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-                        }
-            });
-
         // Command for resetting nameservers in network adapter
         ResetDns = ReactiveCommand.Create(
             () =>
@@ -106,7 +82,7 @@ public class NameserverListViewModel : ViewModelBase
         // When the selected nameserver is changed, update the plot
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(MainViewModel.CreatePlot);
+            .Subscribe(UpdateSelectedNameserver);
 
         // When the completed task counter is changed, update the list view
         this.WhenAnyValue(x => x.CompletedTaskCounter)
@@ -122,7 +98,6 @@ public class NameserverListViewModel : ViewModelBase
 
     // Commands
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
-    public ReactiveCommand<string, Unit> ApplyDnsCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
 
@@ -205,5 +180,12 @@ public class NameserverListViewModel : ViewModelBase
         });
 
         return task;
+    }
+
+    public void UpdateSelectedNameserver(NameserverViewModel? selectedNameserver)
+    {
+        MainViewModel.CreatePlot(selectedNameserver);
+
+        MainViewModel.SettingsPanelViewModel.SelectedNameserver = selectedNameserver?.IpAddress;
     }
 }

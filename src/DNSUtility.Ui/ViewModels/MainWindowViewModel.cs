@@ -50,7 +50,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // The settings panel view model
-    public ViewModelBase SettingsPanelViewModel { get; }
+    public SettingsPanelViewModel SettingsPanelViewModel { get; }
 
     // The ping graph view model
     public GraphViewModel GraphViewModel
