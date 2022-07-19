@@ -25,7 +25,11 @@ public class SettingsPanelViewModel : ViewModelBase
         CountryCodesList = Enum.GetNames(typeof(CountryInfo.CountryCodes)).ToList();
 
         UpdateCountryCommand = ReactiveCommand.Create(UpdateCountry);
+
+        UpdateActiveNetworkInterfaceCommand = ReactiveCommand.Create(UpdateActiveNetworkInterface);
     }
+
+    public ReactiveCommand<Unit, Unit> UpdateActiveNetworkInterfaceCommand { get; set; }
 
     public ReactiveCommand<Unit, Unit> UpdateCountryCommand { get; set; }
 
@@ -34,13 +38,7 @@ public class SettingsPanelViewModel : ViewModelBase
 
     public string CurrentCountry { get; set; }
 
-    public string ActiveInterfaceDescription
-    {
-        get => _userSettings.NetworkAdapters.ActiveInterface.Description;
-        set => _userSettings.NetworkAdapters.ActiveInterface =
-            _userSettings.NetworkAdapters.NetworkInterfaces.FirstOrDefault(i =>
-                i.Description == ActiveInterfaceDescription);
-    }
+    public string ActiveInterfaceDescription { get; set; }
 
     public List<string> Adapters { get; set; }
 
@@ -48,5 +46,12 @@ public class SettingsPanelViewModel : ViewModelBase
     {
         _userSettings.Country = CurrentCountry;
         MainViewModel.InitializeNameserverList();
+    }
+
+    public void UpdateActiveNetworkInterface()
+    {
+        _userSettings.NetworkAdapters.ActiveInterface =
+            _userSettings.NetworkAdapters.NetworkInterfaces.FirstOrDefault(i =>
+                i.Description == ActiveInterfaceDescription);
     }
 }
