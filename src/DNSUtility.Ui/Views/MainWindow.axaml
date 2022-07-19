@@ -47,8 +47,8 @@
                             Content="{Binding GraphViewModel}" />
             
             <!-- Info panel -->
-            <ContentControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Content="{Binding SettingsPanelViewModel}"
-                            Padding="30" />
+            <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding SettingsPanelViewModel}"
+                            Padding="30,0,30,15" />
 
         </Grid>
     </Panel>

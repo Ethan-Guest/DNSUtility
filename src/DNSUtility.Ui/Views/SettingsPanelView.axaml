@@ -7,11 +7,10 @@
 
 
     <Border Background="#2E2E48" CornerRadius="10">
-        <Grid>
+        <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="250" />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
@@ -21,9 +20,6 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="53" />
                 <RowDefinition Height="20" />
-                <RowDefinition Height="53" />
-                <RowDefinition Height="20" />
-
             </Grid.RowDefinitions>
 
             <!--Adapter selector-->
