@@ -56,9 +56,20 @@ public class SettingsPanelViewModel : ViewModelBase
                                     MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
                         }
             });
+        // Command for resetting nameservers in network adapter
+        ResetDns = ReactiveCommand.Create(
+            () =>
+            {
+                var applyDns = new ApplyDns();
+                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                    if (SelectedNameserver != null)
+                        applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+            });
     }
 
     public ReactiveCommand<string, Unit> ApplyDnsCommand { get; set; }
+
+    public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
     public ReactiveCommand<Unit, Unit> UpdateActiveNetworkInterfaceCommand { get; set; }
 

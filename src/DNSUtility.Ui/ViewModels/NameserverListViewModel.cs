@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
-using DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -67,16 +66,6 @@ public class NameserverListViewModel : ViewModelBase
                     BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
             });
 
-        // Command for resetting nameservers in network adapter
-        ResetDns = ReactiveCommand.Create(
-            () =>
-            {
-                var applyDns = new ApplyDns();
-                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                    if (SelectedNameserver != null)
-                        applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-            });
-
 
         // Rx property observers
         // When the selected nameserver is changed, update the plot
@@ -98,7 +87,6 @@ public class NameserverListViewModel : ViewModelBase
 
     // Commands
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
-    public ReactiveCommand<Unit, Unit> ResetDns { get; set; }
 
 
     // Live UI properties
