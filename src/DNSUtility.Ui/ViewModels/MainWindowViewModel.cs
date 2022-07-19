@@ -13,25 +13,28 @@ namespace DNSUtility.Ui.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     private GraphViewModel _graph;
+    private ViewModelBase _nameserverListViewModel;
 
     public MainWindowViewModel(IParser parser)
     {
+        // Initialize the parser object
+        NameserverParser = parser;
+
         // Initialize the users configuration
         InitializeUserSettings();
 
+        // TODO handle usersettings null
         // Initialize settings panel
         if (UserSettings != null)
         {
             SettingsPanelViewModel = new SettingsPanelViewModel(this, UserSettings, new List<string>());
-
-            // Create the nameserver list viewmodel
-            NameserverListViewModel = new NameserverListViewModel(
-                parser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
-                new StandardPingBenchmark(), this);
         }
-        // TODO handle usersettings null
+
+        // Create the nameserver list viewmodel
+        InitializeNameserverList();
     }
 
+    public IParser NameserverParser { get; set; }
 
     // The users settings
     public UserSettings UserSettings { get; set; }
@@ -40,7 +43,11 @@ public class MainWindowViewModel : ViewModelBase
     /*public NetworkAdapters NetworkAdapters { get; set; }*/
 
     // The nameserver list view model
-    public ViewModelBase NameserverListViewModel { get; }
+    public ViewModelBase NameserverListViewModel
+    {
+        get => _nameserverListViewModel;
+        set => this.RaiseAndSetIfChanged(ref _nameserverListViewModel, value);
+    }
 
     // The settings panel view model
     public ViewModelBase SettingsPanelViewModel { get; }
@@ -50,6 +57,13 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _graph;
         set => this.RaiseAndSetIfChanged(ref _graph, value);
+    }
+
+    public void InitializeNameserverList()
+    {
+        NameserverListViewModel = new NameserverListViewModel(
+            NameserverParser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
+            new StandardPingBenchmark(), this);
     }
 
     // Initialize the users system info. (Country, language) TODO: Add test to check behavior when country / language is null

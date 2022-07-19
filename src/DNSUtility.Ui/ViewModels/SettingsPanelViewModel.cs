@@ -47,5 +47,6 @@ public class SettingsPanelViewModel : ViewModelBase
     public void UpdateCountry()
     {
         _userSettings.Country = CurrentCountry;
+        MainViewModel.InitializeNameserverList();
     }
 }
