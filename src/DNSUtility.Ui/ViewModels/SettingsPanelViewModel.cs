@@ -28,6 +28,7 @@ public class SettingsPanelViewModel : ViewModelBase
         foreach (var adapter in _userSettings.NetworkAdapters.NetworkInterfaces) Adapters.Add(adapter.Description);
 
         CountryCodesList = Enum.GetNames(typeof(CountryInfo.CountryCodes)).ToList();
+        CountryCodesList.Sort();
 
         UpdateCountryCommand = ReactiveCommand.Create(UpdateCountry);
 
