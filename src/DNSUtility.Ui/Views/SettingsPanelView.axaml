@@ -64,10 +64,14 @@
             </Button>
 
             <!--Reset-->
-            <Button Grid.Column="1" Grid.Row="7" VerticalAlignment="Bottom" Width="78" Height="30" Margin="243,0,0,0"
-                    Command="{Binding UpdateCountryCommand}">
-                Alternate
+            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="328,0,0,0"
+                    Command="{Binding ResetDns}">
+                <PathIcon Data="{StaticResource arrow_undo_regular}" Height="15" Width="15" />
             </Button>
+            
+            
+            
+            
         </Grid>
 
     </Border>
