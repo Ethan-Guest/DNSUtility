@@ -22,7 +22,7 @@ public class MainWindowViewModel : ViewModelBase
         // Initialize settings panel
         if (UserSettings != null)
         {
-            SettingsPanelViewModel = new SettingsPanelViewModel(UserSettings, new List<string>());
+            SettingsPanelViewModel = new SettingsPanelViewModel(this, UserSettings, new List<string>());
 
             // Create the nameserver list viewmodel
             NameserverListViewModel = new NameserverListViewModel(

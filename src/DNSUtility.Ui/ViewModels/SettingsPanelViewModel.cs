@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
-using System.Reactive.Linq;
+using DNSUtility.Domain.AppModels;
 using DNSUtility.Domain.UserModels;
 using ReactiveUI;
 
@@ -12,34 +13,39 @@ public class SettingsPanelViewModel : ViewModelBase
     private readonly UserSettings _userSettings;
     private string _activeInterfaceDescription;
 
-    public SettingsPanelViewModel(UserSettings userSettings, List<string> adapters)
+    public SettingsPanelViewModel(MainWindowViewModel mainViewModel, UserSettings userSettings, List<string> adapters)
     {
+        MainViewModel = mainViewModel;
         _userSettings = userSettings;
-        _activeInterfaceDescription = userSettings.NetworkAdapters.ActiveInterface.Description;
+        CurrentCountry = userSettings.Country;
+        _activeInterfaceDescription = _userSettings.NetworkAdapters.ActiveInterface.Description;
         Adapters = new List<string>();
         foreach (var adapter in _userSettings.NetworkAdapters.NetworkInterfaces) Adapters.Add(adapter.Description);
 
-        // When the selected nameserver is changed, update the plot
-        this.WhenAnyValue(x => x.ActiveInterfaceDescription)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .InvokeCommand(UpdateActiveInterface);
+        CountryCodesList = Enum.GetNames(typeof(CountryInfo.CountryCodes)).ToList();
 
-        UpdateActiveInterface = ReactiveCommand.Create(
-            () =>
-            {
-                _userSettings.NetworkAdapters.ActiveInterface =
-                    _userSettings.NetworkAdapters.NetworkInterfaces.First(i =>
-                        i.Description == ActiveInterfaceDescription);
-            });
+        UpdateCountryCommand = ReactiveCommand.Create(UpdateCountry);
     }
 
-    public ReactiveCommand<Unit, Unit> UpdateActiveInterface { get; set; }
+    public ReactiveCommand<Unit, Unit> UpdateCountryCommand { get; set; }
+
+    private MainWindowViewModel MainViewModel { get; }
+    public List<string> CountryCodesList { get; set; }
+
+    public string CurrentCountry { get; set; }
 
     public string ActiveInterfaceDescription
     {
-        get => _activeInterfaceDescription;
-        set => this.RaiseAndSetIfChanged(ref _activeInterfaceDescription, value);
+        get => _userSettings.NetworkAdapters.ActiveInterface.Description;
+        set => _userSettings.NetworkAdapters.ActiveInterface =
+            _userSettings.NetworkAdapters.NetworkInterfaces.FirstOrDefault(i =>
+                i.Description == ActiveInterfaceDescription);
     }
 
     public List<string> Adapters { get; set; }
+
+    public void UpdateCountry()
+    {
+        _userSettings.Country = CurrentCountry;
+    }
 }

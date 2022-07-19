@@ -7,7 +7,7 @@
 
 
     <Border Background="#2E2E48" CornerRadius="10">
-        <Grid>
+        <Grid ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="250" />
@@ -30,13 +30,17 @@
             <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Adapter" />
             <ComboBox Grid.Column="1" Grid.Row="1" Width="300" Height="30" HorizontalAlignment="Left"
                       VerticalAlignment="Bottom"
-                      Items="{Binding Adapters}" SelectedItem="{Binding ActiveInterfaceDescription}" />
+                      Items="{Binding Adapters}" SelectedItem="{Binding ActiveInterfaceDescription, Mode=TwoWay}" />
 
             <!--Country selector-->
             <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left" Text="Country" />
             <ComboBox Grid.Column="1" Grid.Row="3" Width="75" Height="30" VerticalAlignment="Bottom"
                       HorizontalAlignment="Left"
-                      Items="{Binding }" SelectedItem="{Binding }" />
+                      Items="{Binding CountryCodesList}" SelectedItem="{Binding CurrentCountry }" />
+            <Button Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Width="55" Height="30" Margin="85,0,0,0"
+                    Command="{Binding UpdateCountryCommand}">
+                Apply
+            </Button>
 
             <!--Primary DNS input-->
             <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Left"
