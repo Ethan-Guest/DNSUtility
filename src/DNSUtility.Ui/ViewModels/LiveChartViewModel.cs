@@ -34,6 +34,40 @@ public class LiveChartViewModel : ViewModelBase
         };
     }
 
+    // LIVE CHART STYLING
+
+    // The frame style
+    public DrawMarginFrame DrawMarginFrame => new()
+    {
+        Fill = new SolidColorPaint(new SKColor(0, 0, 0, 20)),
+        Stroke = new SolidColorPaint(new SKColor(53, 53, 83), 2)
+    };
+
+    // X Axis style
+    public Axis[] XAxes { get; set; }
+        =
+        {
+            new()
+            {
+                LabelsPaint = new SolidColorPaint(new SKColor(160, 160, 212)),
+                MinLimit = 0,
+                TextSize = 15,
+                SeparatorsPaint = new SolidColorPaint(new SKColor(53, 53, 83)) { StrokeThickness = 2 }
+            }
+        };
+
+    // Y Axis style
+    public Axis[] YAxes { get; set; }
+        =
+        {
+            new()
+            {
+                LabelsPaint = new SolidColorPaint(new SKColor(160, 160, 212)),
+                TextSize = 15,
+                SeparatorsPaint = new SolidColorPaint(new SKColor(53, 53, 83)) { StrokeThickness = 2 }
+            }
+        };
+
     // PROPERTIES
 
     /// <summary>
