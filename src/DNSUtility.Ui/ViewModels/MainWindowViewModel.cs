@@ -32,6 +32,8 @@ public class MainWindowViewModel : ViewModelBase
 
         // Create the nameserver list viewmodel
         InitializeNameserverList();
+
+        InitializeLiveChart();
     }
 
     public IParser NameserverParser { get; set; }
@@ -53,10 +55,10 @@ public class MainWindowViewModel : ViewModelBase
     public SettingsPanelViewModel SettingsPanelViewModel { get; }
 
     // The ping graph view model
-    public GraphViewModel GraphViewModel
+    public LiveChartViewModel LiveChartViewModel { get; set; }
+
+    private void InitializeLiveChart()
     {
-        get => _graph;
-        set => this.RaiseAndSetIfChanged(ref _graph, value);
     }
 
     public void InitializeNameserverList()
