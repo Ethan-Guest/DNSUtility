@@ -44,7 +44,7 @@
             
             <!-- Graph panel -->
             <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Padding="30,15,30,30"
-                            Content="{Binding GraphViewModel}" />
+                            Content="{Binding LiveChartViewModel}" />
 
             <!-- Settings panel -->
             <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding SettingsPanelViewModel}"

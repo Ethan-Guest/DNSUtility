@@ -172,8 +172,6 @@ public class NameserverListViewModel : ViewModelBase
 
     public void UpdateSelectedNameserver(NameserverViewModel? selectedNameserver)
     {
-        MainViewModel.CreatePlot(selectedNameserver);
-
         MainViewModel.SettingsPanelViewModel.SelectedNameserver = selectedNameserver?.IpAddress;
     }
 }
