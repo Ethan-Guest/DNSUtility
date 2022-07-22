@@ -75,4 +75,25 @@ public class LiveChartViewModel : ViewModelBase
     ///     we create a collection.
     /// </summary>
     public ObservableCollection<ISeries> Series { get; set; }
+
+
+    public void CreateSeries(NameserverViewModel? selectedNameserver)
+    {
+        if (selectedNameserver != null)
+        {
+            _observableValues.Clear();
+            for (var i = 0; i < selectedNameserver.Pings.Count; i++)
+                _observableValues.Add(new ObservableValue(selectedNameserver.Pings[i]));
+            Series[0] = new LineSeries<ObservableValue>
+            {
+                Values = _observableValues,
+                Fill = new LinearGradientPaint(new SKColor(49, 255, 125, 1), new SKColor(49, 255, 125, 125),
+                    new SKPoint(0.5f, 1), new SKPoint(0.5f, 0)),
+                Stroke = new SolidColorPaint(new SKColor(49, 255, 125), 4),
+                GeometryFill = new SolidColorPaint(new SKColor(49, 255, 125)),
+                GeometrySize = 10,
+                GeometryStroke = null
+            };
+        }
+    }
 }
