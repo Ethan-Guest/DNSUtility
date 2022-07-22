@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
+using LiveChartsCore.Defaults;
 using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -153,6 +154,8 @@ public class NameserverListViewModel : ViewModelBase
 
                 // Add the reply to the list of pings
                 nameserver.Pings.Add(ping);
+
+                nameserver.ObservablePings.Add(new ObservableValue(ping));
 
                 // Calculate the average ping so it can be displayed in the view
                 nameserver.CalculateAveragePing();

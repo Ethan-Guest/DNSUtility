@@ -10,7 +10,7 @@ namespace DNSUtility.Ui.ViewModels;
 public class LiveChartViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _mainViewModel;
-    private readonly ObservableCollection<ObservableValue> _observableValues;
+    private ObservableCollection<ObservableValue> _observableValues;
 
     public LiveChartViewModel(MainWindowViewModel mainViewModel)
     {
@@ -82,8 +82,7 @@ public class LiveChartViewModel : ViewModelBase
         if (selectedNameserver != null)
         {
             _observableValues.Clear();
-            for (var i = 0; i < selectedNameserver.Pings.Count; i++)
-                _observableValues.Add(new ObservableValue(selectedNameserver.Pings[i]));
+            _observableValues = selectedNameserver.ObservablePings;
             Series[0] = new LineSeries<ObservableValue>
             {
                 Values = _observableValues,
