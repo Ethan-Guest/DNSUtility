@@ -40,16 +40,16 @@
                        FontSize="22" />
 
             <!-- Nameserver list panel -->
-            <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"
+            <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Padding="30,0,15,30"
                             Content="{Binding NameserverListViewModel}" />
             
             <!-- Graph panel -->
-            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Padding="30,15,30,30"
+            <ContentControl Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Padding="15,15,30,30"
                             Content="{Binding LiveChartViewModel}" />
 
             <!-- Settings panel -->
             <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding SettingsPanelViewModel}"
-                            Padding="30,0,30,15" />
+                            Padding="15,0,30,15" />
 
         </Grid>
     </Panel>
