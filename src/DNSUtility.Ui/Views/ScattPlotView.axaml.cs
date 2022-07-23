@@ -1,7 +1,5 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ScottPlot.Avalonia;
 
 namespace DNSUtility.Ui.Views;
 

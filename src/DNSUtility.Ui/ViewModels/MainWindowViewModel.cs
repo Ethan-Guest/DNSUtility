@@ -12,7 +12,6 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private GraphViewModel _graph;
     private ViewModelBase _nameserverListViewModel;
 
     public MainWindowViewModel(IParser parser)
