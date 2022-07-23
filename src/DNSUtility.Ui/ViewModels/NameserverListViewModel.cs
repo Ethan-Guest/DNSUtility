@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DNSUtility.Domain.AppModels;
 using DNSUtility.Service.Benchmarks;
+using LiveChartsCore.Defaults;
 using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -66,16 +67,14 @@ public class NameserverListViewModel : ViewModelBase
                     BenchmarkTasks.Add(BenchmarkNameserver(nameserver, pingBenchmark));
             });
 
-
         // Rx property observers
         // When the selected nameserver is changed, update the plot
         this.WhenAnyValue(x => x.SelectedNameserver)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(UpdateSelectedNameserver);
+            .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedNameserver);
 
         // When the completed task counter is changed, update the list view
         this.WhenAnyValue(x => x.CompletedTaskCounter)
-            .Throttle(TimeSpan.FromMilliseconds(500))
+            .Throttle(TimeSpan.FromMilliseconds(1))
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(UpdateListView);
     }
@@ -83,6 +82,7 @@ public class NameserverListViewModel : ViewModelBase
     // Properties
     public MainWindowViewModel MainViewModel { get; set; }
     public List<Task> BenchmarkTasks { get; set; }
+
     public object Lock { get; set; }
 
     // Commands
@@ -154,6 +154,8 @@ public class NameserverListViewModel : ViewModelBase
                 // Add the reply to the list of pings
                 nameserver.Pings.Add(ping);
 
+                nameserver.ObservablePings.Add(new ObservableValue(ping));
+
                 // Calculate the average ping so it can be displayed in the view
                 nameserver.CalculateAveragePing();
 
@@ -172,7 +174,8 @@ public class NameserverListViewModel : ViewModelBase
 
     public void UpdateSelectedNameserver(NameserverViewModel? selectedNameserver)
     {
-        MainViewModel.CreatePlot(selectedNameserver);
+        if (MainViewModel.LiveChartViewModel != null) MainViewModel.LiveChartViewModel.CreateSeries(selectedNameserver);
+
 
         MainViewModel.SettingsPanelViewModel.SelectedNameserver = selectedNameserver?.IpAddress;
     }

@@ -1,0 +1,17 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DNSUtility.Ui.Views.LiveChartView">
+
+    <Border Background="#2A2A41">
+        <Grid ShowGridLines="True">
+            <lvc:CartesianChart Series="{Binding Series}" TooltipFindingStrategy="CompareAll"
+                                DrawMarginFrame="{Binding DrawMarginFrame}" XAxes="{Binding XAxes}"
+                                YAxes="{Binding YAxes}" />
+        </Grid>
+    </Border>
+
+</UserControl>

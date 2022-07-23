@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using DNSUtility.Domain.AppModels;
+using LiveChartsCore.Defaults;
 using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -19,9 +21,12 @@ public class NameserverViewModel : ViewModelBase
 
     private List<ushort> _pings;
 
+
     private decimal _reliability;
 
     private string _statusIcon;
+
+    public ObservableCollection<ObservableValue> ObservablePings;
 
     public NameserverViewModel(Nameserver nameserver)
     {
@@ -33,6 +38,7 @@ public class NameserverViewModel : ViewModelBase
         Reliability = nameserver.Reliability;
         AveragePing = 0;
         Pings = new List<ushort>();
+        ObservablePings = new ObservableCollection<ObservableValue>();
 
         // Set the default color (gray)
         StatusIcon = "#858585";
