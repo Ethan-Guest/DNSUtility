@@ -5,7 +5,8 @@
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource JetBrainsMono}">
 
     <!-- Main panel -->
     <Panel>

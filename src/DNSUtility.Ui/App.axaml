@@ -27,6 +27,8 @@
         <SolidColorBrush x:Key="Foreground">#2E2E48</SolidColorBrush>
         <SolidColorBrush x:Key="ForegroundLighter">#353553</SolidColorBrush>
 
+        <FontFamily x:Key="JetBrainsMono">avares://DNSUtility.Ui/Assets/Fonts#JetBrains Mono</FontFamily>
+
         <!--<Style Selector="TextBlock">
             <Setter Property="FontSize" Value="10" />
             <Setter Property="FontWeight" Value="Regular" />
