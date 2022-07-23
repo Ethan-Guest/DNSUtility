@@ -7,9 +7,9 @@
 
 
     <!-- Grid to hold nameserver list and control buttons -->
-    <Grid ShowGridLines="True">
+    <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="520" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight="60" />
@@ -57,7 +57,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn IsReadOnly="True" MaxWidth="130" Header="Country" Binding="{Binding Country}"
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}"
                                     CanUserSort="False" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}"
                                     CanUserSort="False" />
