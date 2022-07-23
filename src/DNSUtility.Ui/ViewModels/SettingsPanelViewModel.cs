@@ -29,37 +29,14 @@ public class SettingsPanelViewModel : ViewModelBase
 
         UpdateActiveNetworkInterfaceCommand = ReactiveCommand.Create(UpdateActiveNetworkInterface);
 
-        // Command for applying nameserver to network adapter
-        ApplyDnsCommand = ReactiveCommand.Create<string>(
-            parameter =>
-            {
-                var applyDns = new ApplyDns();
 
-                if (SelectedNameserver != null)
-                    // 0 = primary
-                    if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-
-                        if (parameter == "primary")
-                        {
-                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                                applyDns.ApplyPrimary(SelectedNameserver,
-                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-                        }
-                        else if (parameter == "secondary")
-                        {
-                            if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                                applyDns.ApplySecondary(SelectedNameserver,
-                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
-                        }
-            });
         // Command for resetting nameservers in network adapter
         ResetDns = ReactiveCommand.Create(
             () =>
             {
                 var applyDns = new ApplyDns();
                 if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
-                    if (SelectedNameserver != null)
-                        applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                    applyDns.ResetAll(MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
             });
     }
 
@@ -72,14 +49,6 @@ public class SettingsPanelViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> UpdateCountryCommand { get; set; }
 
     private MainWindowViewModel MainViewModel { get; }
-
-    public string? SelectedNameserver
-    {
-        get => _selectedNameserver;
-        set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
-    }
-
-    public List<string> CountryCodesList { get; set; }
 
 
     public string? ActiveInterfaceDescription { get; set; }

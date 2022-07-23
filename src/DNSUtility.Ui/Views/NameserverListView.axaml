@@ -30,7 +30,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding RunDnsTest}">
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding RunDnsTest}"
+                    IsEnabled="{Binding !BenchmarkInProgress}">
                 Run DNS Test
             </Button>
 
@@ -39,7 +40,7 @@
 
             <ProgressBar Grid.Row="1" IsIndeterminate="{Binding BenchmarkInProgress}"
                          IsVisible="{Binding BenchmarkInProgress}"
-                         Width="300" Grid.ColumnSpan="4"
+                         Width="475" Grid.ColumnSpan="4"
                          HorizontalAlignment="Center" />
 
         </Grid>

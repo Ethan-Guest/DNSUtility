@@ -7,10 +7,11 @@
 
 
     <Border Background="#2E2E48" CornerRadius="10">
-        <Grid VerticalAlignment="Center">
+        <Grid VerticalAlignment="Center" ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
@@ -20,51 +21,55 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="53" />
                 <RowDefinition Height="20" />
+
             </Grid.RowDefinitions>
 
             <!--Adapter selector-->
             <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Adapter" />
-            <ComboBox Grid.Column="1" Grid.Row="1" Width="300" Height="30" HorizontalAlignment="Left"
+            <ComboBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Width="300" Height="30"
+                      HorizontalAlignment="Left"
                       VerticalAlignment="Bottom"
                       Items="{Binding Adapters}" SelectedItem="{Binding ActiveInterfaceDescription, Mode=TwoWay}" />
-            <Button Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Width="35" Height="30" Margin="310,0,0,0"
-                    Command="{Binding UpdateActiveNetworkInterfaceCommand}">
-                <PathIcon Data="{StaticResource checkmark_regular}" Height="20" Width="20" />
-            </Button>
 
-            <!--Country selector-->
-            <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left" Text="Country" />
-            <ComboBox Grid.Column="1" Grid.Row="3" Width="75" Height="30" VerticalAlignment="Bottom"
-                      HorizontalAlignment="Left"
-                      Items="{Binding CountryCodesList}" SelectedItem="{Binding CurrentCountry }" />
-            <Button Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Width="35" Height="30" Margin="85,0,0,0"
-                    Command="{Binding UpdateCountryCommand}">
-                <PathIcon Data="{StaticResource checkmark_regular}" Height="20" Width="20" />
-            </Button>
 
             <!--Primary DNS input-->
+            <!--Title-->
+            <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Left"
+                       Text="Preferred" />
+            <!--Input Text box-->
+            <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Width="144" Height="24"
+                     TextAlignment="Center"
+                     Watermark=".   .   ."
+                     HorizontalAlignment="Left" />
+            <!--Apply Button-->
+            <Button Grid.Column="2" Grid.Row="3" VerticalAlignment="Bottom" Width="30" Height="30" Margin="5,0,0,0"
+                    Command="{Binding ApplyDnsCommand}" CommandParameter="primary">
+                <PathIcon Data="{StaticResource checkmark_regular}" Height="15" Width="15" />
+            </Button>
+            <!--Reset Button-->
+            <Button Grid.Column="2" Grid.Row="3" VerticalAlignment="Bottom" Width="30" Height="30" Margin="45,0,0,0"
+                    Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
+                <PathIcon Data="{StaticResource presence_blocked_regular}" Height="15" Width="15" />
+            </Button>
+            <!-- Secondary DNS input-->
+            <!--Title-->
             <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Left"
-                       Text="IPV4 DNS" />
+                       Text="Alternate" />
+            <!--Input Text box-->
             <TextBox Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="144" Height="24"
                      TextAlignment="Center"
-                     Watermark=".       .       ." Text="{Binding SelectedNameserver}"
+                     Watermark=".   .   ."
                      HorizontalAlignment="Left" />
-
-            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="82" Height="30" Margin="153,0,0,0"
+            <!--Apply Button-->
+            <Button Grid.Column="2" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="5,0,0,0"
                     Command="{Binding ApplyDnsCommand}" CommandParameter="primary">
-                Preferred
+                <PathIcon Data="{StaticResource checkmark_regular}" Height="15" Width="15" />
             </Button>
-            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="78" Height="30" Margin="243,0,0,0"
+            <!--Reset Button-->
+            <Button Grid.Column="2" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="45,0,0,0"
                     Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
-                Alternate
+                <PathIcon Data="{StaticResource presence_blocked_regular}" Height="15" Width="15" />
             </Button>
-
-            <!--Reset-->
-            <Button Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="328,0,0,0"
-                    Command="{Binding ResetDns}">
-                <PathIcon Data="{StaticResource arrow_undo_regular}" Height="15" Width="15" />
-            </Button>
-            
             
             
             

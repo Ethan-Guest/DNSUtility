@@ -197,10 +197,7 @@ public class NameserverListViewModel : ViewModelBase
 
     public void UpdateSelectedNameserver(NameserverViewModel? selectedNameserver)
     {
-        if (MainViewModel.LiveChartViewModel != null) MainViewModel.LiveChartViewModel.CreateSeries(selectedNameserver);
-
-
-        MainViewModel.SettingsPanelViewModel.SelectedNameserver = selectedNameserver?.IpAddress;
+        MainViewModel.LiveChartViewModel.CreateSeries(selectedNameserver);
     }
 
     public void UpdateSelectedCountry(string selectedCountry)
