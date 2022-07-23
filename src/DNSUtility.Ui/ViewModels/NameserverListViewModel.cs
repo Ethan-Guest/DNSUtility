@@ -83,7 +83,7 @@ public class NameserverListViewModel : ViewModelBase
             .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedNameserver);
 
         this.WhenAnyValue(x => x.SelectedCountry)
-            .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedCountry);
+            .ObserveOn(RxApp.TaskpoolScheduler).Skip(1).Subscribe(UpdateSelectedCountry);
 
         // When the completed task counter is changed, update the list view
         this.WhenAnyValue(x => x.CompletedTaskCounter)
