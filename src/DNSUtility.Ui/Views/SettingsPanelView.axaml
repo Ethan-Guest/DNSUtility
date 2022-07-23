@@ -7,7 +7,7 @@
 
 
     <Border Background="#2E2E48" CornerRadius="10">
-        <Grid VerticalAlignment="Center" ShowGridLines="True">
+        <Grid VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="150" />

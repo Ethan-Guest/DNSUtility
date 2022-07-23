@@ -8,7 +8,19 @@
 
     <Border Background="#2A2A41">
         <Grid ShowGridLines="True">
-            <lvc:CartesianChart Series="{Binding Series}" TooltipFindingStrategy="CompareAll"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Ellipse Grid.Column="1" HorizontalAlignment="Left" Width="7" Height="7" Fill="{Binding ActiveNameserver.}" />
+
+            <lvc:CartesianChart Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Series="{Binding Series}"
+                                TooltipFindingStrategy="CompareAll"
                                 DrawMarginFrame="{Binding DrawMarginFrame}" XAxes="{Binding XAxes}"
                                 YAxes="{Binding YAxes}" />
         </Grid>

@@ -19,7 +19,7 @@
 
 
         <!--Grid for control buttons -->
-        <Grid ShowGridLines="True">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition />
@@ -47,7 +47,8 @@
         <!-- Data grid for displaying nameservers -->
         <DataGrid Grid.Row="1" Name="NameserverListDataGrid" Items="{Binding Nameservers}"
                   SelectedItem="{Binding SelectedNameserver}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  HorizontalScrollBarVisibility="Disabled">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="10">
                     <DataGridTemplateColumn.CellTemplate>
