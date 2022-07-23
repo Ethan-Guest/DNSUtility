@@ -49,7 +49,7 @@
             </Button>
             <!--Reset Button-->
             <Button Grid.Column="2" Grid.Row="3" VerticalAlignment="Bottom" Width="30" Height="30" Margin="45,0,0,0"
-                    Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
+                    Command="{Binding ResetDnsCommand}">
                 <PathIcon Data="{StaticResource presence_blocked_regular}" Height="15" Width="15" />
             </Button>
             <!-- Secondary DNS input-->
@@ -64,12 +64,12 @@
                      HorizontalAlignment="Left" />
             <!--Apply Button-->
             <Button Grid.Column="2" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="5,0,0,0"
-                    Command="{Binding ApplyDnsCommand}" CommandParameter="primary">
+                    Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
                 <PathIcon Data="{StaticResource checkmark_regular}" Height="15" Width="15" />
             </Button>
             <!--Reset Button-->
             <Button Grid.Column="2" Grid.Row="5" VerticalAlignment="Bottom" Width="30" Height="30" Margin="45,0,0,0"
-                    Command="{Binding ApplyDnsCommand}" CommandParameter="secondary">
+                    Command="{Binding ResetDnsCommand}">
                 <PathIcon Data="{StaticResource presence_blocked_regular}" Height="15" Width="15" />
             </Button>
             

@@ -24,18 +24,16 @@
                 <RowDefinition Height="50" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
 
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding RunDnsTest}"
+            <!--Run Test Button-->
+            <Button Margin=" 80,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding RunDnsTest}"
                     IsEnabled="{Binding !BenchmarkInProgress}">
                 Run DNS Test
             </Button>
 
-            <ComboBox Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <!--Country Combobox-->
+            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center"
                       Items="{Binding CountryCodesList}" SelectedItem="{Binding SelectedCountry }" />
 
             <ProgressBar Grid.Row="1" IsIndeterminate="{Binding BenchmarkInProgress}"
@@ -51,7 +49,7 @@
                   SelectedItem="{Binding SelectedNameserver}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Status" Width="*">
+                <DataGridTemplateColumn Width="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Ellipse Width="10" Height="10" Fill="{Binding StatusIcon}" />
@@ -59,7 +57,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Country" Binding="{Binding Country}"
+                <DataGridTextColumn IsReadOnly="True" MaxWidth="130" Header="Country" Binding="{Binding Country}"
                                     CanUserSort="False" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}"
                                     CanUserSort="False" />
