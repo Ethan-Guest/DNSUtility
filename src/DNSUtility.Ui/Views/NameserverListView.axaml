@@ -61,7 +61,8 @@
                                     CanUserSort="False" />
                 <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="IPAddress" Binding="{Binding IpAddress}"
                                     CanUserSort="False" />
-                <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Header="Ping" Binding="{Binding LatestPing}" />
+                <DataGridTextColumn IsReadOnly="True" Width="100" MaxWidth="150" Header="Ping"
+                                    Binding="{Binding LatestPing}" />
             </DataGrid.Columns>
         </DataGrid>
 

@@ -6,7 +6,8 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
         WindowStartupLocation="CenterScreen"
-        FontFamily="{StaticResource JetBrainsMono}">
+        FontFamily="{StaticResource JetBrainsMono}"
+        Foreground="{DynamicResource BlueTint}">
 
     <!-- Main panel -->
     <Panel>
@@ -15,7 +16,7 @@
         <Border IsHitTestVisible="False" Background="{DynamicResource Background}"/>
 
         <!-- Main panel grid to format all views-->
-        <Grid ShowGridLines="True">
+        <Grid>
 
             <!-- Columns -->
             <Grid.ColumnDefinitions>
@@ -25,7 +26,7 @@
 
             <!-- Rows -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
+                <RowDefinition Height="70" />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition MaxHeight="80" />
@@ -36,8 +37,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="40,0,0,0"
-                       Foreground="White"
-                       FontSize="22" />
+                       FontSize="28" />
 
             <!-- Nameserver list panel -->
             <ContentControl Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Padding="30,0,15,30"

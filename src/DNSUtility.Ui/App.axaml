@@ -11,13 +11,25 @@
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <StyleInclude Source="avares://DNSUtility.Ui/Assets/Icons.axaml" />
 
-        <!--<Style Selector="TextBlock">
-            
-            <Setter Property="FontFamily" Value="avares://DNSUtility.Ui/Assets/Fonts/JetBrainsMono#JetBrainsMono" />
-            <Setter Property="FontWeight" Value="Regular" />
+
+        <Style Selector="Button">
+            <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
+        </Style>
+
+
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
+            <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
             <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="#272727" />
-        </Style>-->
+
+
+        </Style>
+        
         
     </Application.Styles>
     
@@ -27,14 +39,9 @@
         <SolidColorBrush x:Key="Foreground">#2E2E48</SolidColorBrush>
         <SolidColorBrush x:Key="ForegroundLighter">#353553</SolidColorBrush>
 
+        <SolidColorBrush x:Key="BlueTint">#EFEFFF</SolidColorBrush>
+
         <FontFamily x:Key="JetBrainsMono">avares://DNSUtility.Ui/Assets/Fonts#JetBrains Mono</FontFamily>
-
-        <!--<Style Selector="TextBlock">
-            <Setter Property="FontSize" Value="10" />
-            <Setter Property="FontWeight" Value="Regular" />
-            <Setter Property="FontFamily" Value="Assets/Fonts/JetBrainsMono/JetBrainsMono-regular.ttf #JetBrains" />
-
-        </Style>-->
 
 
     </Application.Resources>
