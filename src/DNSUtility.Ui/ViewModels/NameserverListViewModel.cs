@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DNSUtility.Domain.AppModels;
+using DNSUtility.Domain.UserModels;
 using DNSUtility.Service.Benchmarks;
 using LiveChartsCore.Defaults;
 using ReactiveUI;
@@ -15,17 +16,20 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class NameserverListViewModel : ViewModelBase
 {
+    private readonly UserSettings _userSettings;
+
     // Backing fields
     private bool _benchmarkInProgress;
     private int _completedTaskCounter;
     private ObservableCollection<NameserverViewModel>? _nameservers;
+    private string _selectedCountry;
 
     private NameserverViewModel? _selectedNameserver;
 
     // Constructor takes in a list of nameserver models, the benchmark object, and a reference to the main ViewModel
     // TODO switch the ping benchmark to the selected benchmark type from user settings. (Quick, Standard)
-    public NameserverListViewModel(IEnumerable<Nameserver> nameservers, IBenchmark pingBenchmark,
-        MainWindowViewModel mainWindowViewModel)
+    public NameserverListViewModel(MainWindowViewModel mainWindowViewModel, IEnumerable<Nameserver> nameservers,
+        IBenchmark pingBenchmark, UserSettings userSettings)
     {
         // Store access to main view model instance
         MainViewModel = mainWindowViewModel;
@@ -37,6 +41,12 @@ public class NameserverListViewModel : ViewModelBase
             var nameserverViewModel = new NameserverViewModel(nameserver);
             Nameservers.Add(nameserverViewModel);
         }
+
+        _userSettings = userSettings;
+        SelectedCountry = userSettings.Country;
+
+        CountryCodesList = Enum.GetNames(typeof(CountryInfo.CountryCodes)).ToList();
+        CountryCodesList.Sort();
 
         // List of tasks to be run during test
         BenchmarkTasks = new List<Task>();
@@ -72,6 +82,9 @@ public class NameserverListViewModel : ViewModelBase
         this.WhenAnyValue(x => x.SelectedNameserver)
             .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedNameserver);
 
+        this.WhenAnyValue(x => x.SelectedCountry)
+            .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedCountry);
+
         // When the completed task counter is changed, update the list view
         this.WhenAnyValue(x => x.CompletedTaskCounter)
             .Throttle(TimeSpan.FromMilliseconds(1))
@@ -84,6 +97,9 @@ public class NameserverListViewModel : ViewModelBase
     public List<Task> BenchmarkTasks { get; set; }
 
     public object Lock { get; set; }
+
+    public List<string> CountryCodesList { get; set; }
+
 
     // Commands
     public ReactiveCommand<Unit, Unit> RunDnsTest { get; set; }
@@ -101,6 +117,13 @@ public class NameserverListViewModel : ViewModelBase
         get => _selectedNameserver;
         set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
     }
+
+    public string SelectedCountry
+    {
+        get => _selectedCountry;
+        set => this.RaiseAndSetIfChanged(ref _selectedCountry, value);
+    }
+
 
     public bool BenchmarkInProgress
     {
@@ -178,5 +201,11 @@ public class NameserverListViewModel : ViewModelBase
 
 
         MainViewModel.SettingsPanelViewModel.SelectedNameserver = selectedNameserver?.IpAddress;
+    }
+
+    public void UpdateSelectedCountry(string selectedCountry)
+    {
+        _userSettings.Country = selectedCountry;
+        MainViewModel.InitializeNameserverList();
     }
 }

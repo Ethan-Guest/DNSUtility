@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
-using DNSUtility.Domain.AppModels;
 using DNSUtility.Domain.UserModels;
 using DNSUtility.Service.NetworkAdapterServices.AdapterProperties;
 using ReactiveUI;
@@ -18,7 +16,6 @@ public class SettingsPanelViewModel : ViewModelBase
     {
         MainViewModel = mainViewModel;
         _userSettings = userSettings;
-        CurrentCountry = userSettings.Country;
 
         ActiveInterfaceDescription =
             _userSettings.NetworkAdapters.ActiveInterface
@@ -27,8 +24,6 @@ public class SettingsPanelViewModel : ViewModelBase
         Adapters = new List<string>();
         foreach (var adapter in _userSettings.NetworkAdapters.NetworkInterfaces) Adapters.Add(adapter.Description);
 
-        CountryCodesList = Enum.GetNames(typeof(CountryInfo.CountryCodes)).ToList();
-        CountryCodesList.Sort();
 
         UpdateCountryCommand = ReactiveCommand.Create(UpdateCountry);
 
@@ -86,7 +81,6 @@ public class SettingsPanelViewModel : ViewModelBase
 
     public List<string> CountryCodesList { get; set; }
 
-    public string CurrentCountry { get; set; }
 
     public string? ActiveInterfaceDescription { get; set; }
 
@@ -94,8 +88,8 @@ public class SettingsPanelViewModel : ViewModelBase
 
     public void UpdateCountry()
     {
-        _userSettings.Country = CurrentCountry;
-        MainViewModel.InitializeNameserverList();
+        /*_userSettings.Country = CurrentCountry;
+        MainViewModel.InitializeNameserverList();*/
     }
 
     public void UpdateActiveNetworkInterface()

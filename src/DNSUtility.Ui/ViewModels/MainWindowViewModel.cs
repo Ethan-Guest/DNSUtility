@@ -63,9 +63,9 @@ public class MainWindowViewModel : ViewModelBase
 
     public void InitializeNameserverList()
     {
-        NameserverListViewModel = new NameserverListViewModel(
+        NameserverListViewModel = new NameserverListViewModel(this,
             NameserverParser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
-            new StandardPingBenchmark(), this);
+            new StandardPingBenchmark(), UserSettings);
     }
 
     // Initialize the users system info. (Country, language) TODO: Add test to check behavior when country / language is null
