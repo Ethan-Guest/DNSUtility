@@ -29,6 +29,29 @@ public class SettingsPanelViewModel : ViewModelBase
 
         UpdateActiveNetworkInterfaceCommand = ReactiveCommand.Create(UpdateActiveNetworkInterface);
 
+        // Command for applying nameserver to network adapter
+        ApplyDnsCommand = ReactiveCommand.Create<string>(
+            parameter =>
+            {
+                var applyDns = new ApplyDns();
+
+                if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+
+                    if (parameter == "primary")
+                    {
+                        if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                            if (PreferredTextInput != null)
+                                applyDns.ApplyPrimary(PreferredTextInput,
+                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                    }
+                    else if (parameter == "secondary")
+                    {
+                        if (MainViewModel.UserSettings.NetworkAdapters.ActiveInterface != null)
+                            if (AlternateTextInput != null)
+                                applyDns.ApplySecondary(AlternateTextInput,
+                                    MainViewModel.UserSettings.NetworkAdapters.ActiveInterface);
+                    }
+            });
 
         // Command for resetting nameservers in network adapter
         ResetDns = ReactiveCommand.Create(
@@ -54,6 +77,10 @@ public class SettingsPanelViewModel : ViewModelBase
     public string? ActiveInterfaceDescription { get; set; }
 
     public List<string> Adapters { get; set; }
+
+    public string PreferredTextInput { get; set; }
+
+    public string AlternateTextInput { get; set; }
 
     public void UpdateCountry()
     {
