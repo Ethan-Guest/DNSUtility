@@ -12,7 +12,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DNSUtility.Domain\DNSUtility.Domain.csproj" />
+        <ProjectReference Include="..\DNSUtility.Domain\DNSUtility.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="NetworkAdapterServices\Windows"/>
     </ItemGroup>
 
 </Project>
