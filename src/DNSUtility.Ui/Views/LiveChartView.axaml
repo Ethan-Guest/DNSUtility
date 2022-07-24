@@ -19,7 +19,9 @@
             <!--
             <Ellipse HorizontalAlignment="Left" Margin="30,0,0,0" Grid.ColumnSpan="2" Width="7" Height="7" Fill="{Binding SelectedNameserver.StatusIcon}" />
             -->
-            <TextBlock Margin="38,0,0,0" Grid.ColumnSpan="2" Text="{Binding  SelectedNameserver.Name}" />
+            <TextBlock Margin="38,0,0,0" Grid.ColumnSpan="2" Text="Ping History for: " />
+
+            <TextBlock Margin="185,0,0,0" Grid.ColumnSpan="2" Text="{Binding  SelectedNameserver.Name}" />
 
             <lvc:CartesianChart Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Series="{Binding Series}"
                                 TooltipFindingStrategy="CompareAll"
