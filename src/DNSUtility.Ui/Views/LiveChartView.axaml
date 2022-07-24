@@ -19,6 +19,7 @@
             <!--
             <Ellipse Grid.Column="1" HorizontalAlignment="Left" Width="7" Height="7" Fill="{Binding _mainViewModel.NameserverListViewModel.SelectedNameserver.StatusIcon}" />
             -->
+            <TextBlock Margin="30,0,0,0" Grid.ColumnSpan="2" Text="{Binding  SelectedNameserver.Name}" />
             <lvc:CartesianChart Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Series="{Binding Series}"
                                 TooltipFindingStrategy="CompareAll"
                                 DrawMarginFrame="{Binding DrawMarginFrame}" XAxes="{Binding XAxes}"

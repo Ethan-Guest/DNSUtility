@@ -20,8 +20,6 @@ public class LiveChartViewModel : ViewModelBase
         // Reference to main view model
         _mainViewModel = mainViewModel;
 
-        _selectedNameserver = _mainViewModel.NameserverListViewModel.SelectedNameserver;
-
         _observableValues = new ObservableCollection<ObservableValue>();
 
         Series = new ObservableCollection<ISeries>
@@ -81,7 +79,7 @@ public class LiveChartViewModel : ViewModelBase
     /// </summary>
     public ObservableCollection<ISeries> Series { get; set; }
 
-    public NameserverViewModel SelectedNameserver
+    public NameserverViewModel? SelectedNameserver
     {
         get => _selectedNameserver;
         set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);

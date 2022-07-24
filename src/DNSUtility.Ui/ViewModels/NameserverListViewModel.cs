@@ -80,7 +80,7 @@ public class NameserverListViewModel : ViewModelBase
         // Rx property observers
         // When the selected nameserver is changed, update the plot
         this.WhenAnyValue(x => x.SelectedNameserver)
-            .ObserveOn(RxApp.MainThreadScheduler).Skip(1).Subscribe(UpdateSelectedNameserver);
+            .ObserveOn(RxApp.TaskpoolScheduler).Skip(1).Subscribe(UpdateSelectedNameserver);
 
         this.WhenAnyValue(x => x.SelectedCountry)
             .ObserveOn(RxApp.TaskpoolScheduler).Skip(1).Subscribe(UpdateSelectedCountry);
@@ -198,6 +198,7 @@ public class NameserverListViewModel : ViewModelBase
     public void UpdateSelectedNameserver(NameserverViewModel? selectedNameserver)
     {
         MainViewModel.LiveChartViewModel.CreateSeries(selectedNameserver);
+        MainViewModel.LiveChartViewModel.SelectedNameserver = selectedNameserver;
     }
 
     public void UpdateSelectedCountry(string selectedCountry)
