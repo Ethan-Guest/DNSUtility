@@ -3,6 +3,7 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using ReactiveUI;
 using SkiaSharp;
 
 namespace DNSUtility.Ui.ViewModels;
@@ -12,10 +13,14 @@ public class LiveChartViewModel : ViewModelBase
     private readonly MainWindowViewModel _mainViewModel;
     private ObservableCollection<ObservableValue> _observableValues;
 
+    private NameserverViewModel? _selectedNameserver;
+
     public LiveChartViewModel(MainWindowViewModel mainViewModel)
     {
         // Reference to main view model
         _mainViewModel = mainViewModel;
+
+        _selectedNameserver = _mainViewModel.NameserverListViewModel.SelectedNameserver;
 
         _observableValues = new ObservableCollection<ObservableValue>();
 
@@ -76,6 +81,11 @@ public class LiveChartViewModel : ViewModelBase
     /// </summary>
     public ObservableCollection<ISeries> Series { get; set; }
 
+    public NameserverViewModel SelectedNameserver
+    {
+        get => _selectedNameserver;
+        set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
+    }
 
     public void CreateSeries(NameserverViewModel? selectedNameserver)
     {

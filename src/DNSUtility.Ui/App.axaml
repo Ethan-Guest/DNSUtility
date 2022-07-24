@@ -26,8 +26,6 @@
             <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
             <Setter Property="Foreground" Value="{DynamicResource BlueTint}" />
             <Setter Property="FontSize" Value="12" />
-
-
         </Style>
         
         

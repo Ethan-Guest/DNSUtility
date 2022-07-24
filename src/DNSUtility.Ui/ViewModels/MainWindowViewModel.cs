@@ -12,7 +12,7 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private ViewModelBase _nameserverListViewModel;
+    private NameserverListViewModel _nameserverListViewModel;
 
     public MainWindowViewModel(IParser parser)
     {
@@ -44,7 +44,7 @@ public class MainWindowViewModel : ViewModelBase
     /*public NetworkAdapters NetworkAdapters { get; set; }*/
 
     // The nameserver list view model
-    public ViewModelBase NameserverListViewModel
+    public NameserverListViewModel NameserverListViewModel
     {
         get => _nameserverListViewModel;
         set => this.RaiseAndSetIfChanged(ref _nameserverListViewModel, value);
