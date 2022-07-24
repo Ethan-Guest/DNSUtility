@@ -12,18 +12,18 @@ public class LiveChartViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _mainViewModel;
     private ObservableCollection<ObservableValue> _observableValues;
-
     private NameserverViewModel? _selectedNameserver;
 
     public LiveChartViewModel(MainWindowViewModel mainViewModel)
     {
         // Reference to main view model
         _mainViewModel = mainViewModel;
-
         _observableValues = new ObservableCollection<ObservableValue>();
 
+        // Create an observable collection of ISeries
         Series = new ObservableCollection<ISeries>
         {
+            // Create a line series and set initial properties (will be overridden in CreateSeries method)
             new LineSeries<ObservableValue>
             {
                 Values = _observableValues,
@@ -38,7 +38,6 @@ public class LiveChartViewModel : ViewModelBase
     }
 
     // LIVE CHART STYLING
-
     // The frame style
     public DrawMarginFrame DrawMarginFrame => new()
     {
@@ -72,34 +71,43 @@ public class LiveChartViewModel : ViewModelBase
         };
 
     // PROPERTIES
-
-    /// <summary>
-    ///     An observable collection of series to be displayed on the live chart. Multiple plots can be displayed at once, thus
-    ///     we create a collection.
-    /// </summary>
+    //
+    // An observable collection of series to be displayed on the live chart. Multiple plots can be displayed at once, thus
+    // we create a collection.
     public ObservableCollection<ISeries> Series { get; set; }
 
+    // REACTIVE PROPERTIES
+    //
+    // The selected nameserver
     public NameserverViewModel? SelectedNameserver
     {
         get => _selectedNameserver;
         set => this.RaiseAndSetIfChanged(ref _selectedNameserver, value);
     }
 
+
+    // METHODS
+    //
+    // Create a series (graph)
     public void CreateSeries(NameserverViewModel? selectedNameserver)
     {
         if (selectedNameserver != null)
         {
+            // Clear old values and set the new values
             _observableValues.Clear();
             _observableValues = selectedNameserver.ObservablePings;
+
+            // Create the series (because the LiveCharts packages uses a collection of series, we change the series at index 0)
             Series[0] = new LineSeries<ObservableValue>
             {
-                Values = _observableValues,
-                Fill = new LinearGradientPaint(new SKColor(49, 255, 125, 1), new SKColor(49, 255, 125, 125),
+                Values = _observableValues, // The points
+                Fill = new LinearGradientPaint(new SKColor(49, 255, 125, 1),
+                    new SKColor(49, 255, 125, 125), // The fill below the points
                     new SKPoint(0.5f, 1), new SKPoint(0.5f, 0)),
-                Stroke = new SolidColorPaint(new SKColor(49, 255, 125), 4),
-                GeometryFill = new SolidColorPaint(new SKColor(49, 255, 125)),
-                GeometrySize = 10,
-                GeometryStroke = null
+                Stroke = new SolidColorPaint(new SKColor(49, 255, 125), 4), // The stroke of the line
+                GeometryFill = new SolidColorPaint(new SKColor(49, 255, 125)), // The point fill color
+                GeometrySize = 10, // The point size
+                GeometryStroke = null // The point stroke
             };
         }
     }
