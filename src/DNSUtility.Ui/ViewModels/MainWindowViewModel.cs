@@ -6,6 +6,7 @@ using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.NetworkAdapterServices.Adapters;
 using DNSUtility.Service.Parsers;
+using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
 
@@ -50,7 +51,11 @@ public class MainWindowViewModel : ViewModelBase
     public LiveChartViewModel LiveChartViewModel { get; set; }
 
     // The nameserver list view model
-    public NameserverListViewModel NameserverListViewModel { get; set; }
+    public NameserverListViewModel NameserverListViewModel
+    {
+        get => _nameserverListViewModel;
+        set => this.RaiseAndSetIfChanged(ref _nameserverListViewModel, value);
+    }
 
 
     // Methods
