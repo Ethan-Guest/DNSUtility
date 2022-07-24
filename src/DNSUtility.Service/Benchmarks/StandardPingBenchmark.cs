@@ -3,6 +3,9 @@ using System.Text;
 
 namespace DNSUtility.Service.Benchmarks;
 
+/// <summary>
+///     Ping the nameserver with data
+/// </summary>
 public class StandardPingBenchmark : IBenchmark
 {
     public ushort Run(string address)

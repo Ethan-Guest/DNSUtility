@@ -25,6 +25,7 @@ public class ApplyDns : IApplyDns
         RunNetshProcess(args);
     }
 
+    // Reset the DNS configuration
     public void ResetAll(NetworkInterface adapter)
     {
         var args =

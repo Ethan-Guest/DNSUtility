@@ -2,6 +2,9 @@
 
 namespace DNSUtility.Service.Benchmarks;
 
+/// <summary>
+///     Ping the nameserver
+/// </summary>
 public class QuickPingBenchmark : IBenchmark
 {
     public ushort Run(string address)
