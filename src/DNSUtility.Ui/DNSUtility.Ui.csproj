@@ -38,4 +38,18 @@
     <ItemGroup>
         <Folder Include="Assets\Fonts\"/>
     </ItemGroup>
+    <ItemGroup>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeui.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeuib.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeuii.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeuil.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeuisl.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\segoeuiz.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguibl.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguibli.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguili.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguisb.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguisbi.ttf"/>
+        <UpToDateCheckInput Remove="Assets\Fonts\JetBrainsMono\SegoeUI\seguisli.ttf"/>
+    </ItemGroup>
 </Project>
