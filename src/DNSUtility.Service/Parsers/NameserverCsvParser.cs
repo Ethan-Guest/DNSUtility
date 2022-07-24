@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Net;
 using CsvHelper;
-using DNSUtility.Domain;
 using DNSUtility.Domain.AppModels;
 
 namespace DNSUtility.Service.Parsers;
@@ -25,7 +24,7 @@ public class NameserverCsvParser : IParser
         // Convert CSV to list of Nameserver using CsvHelper
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return csv.GetRecords<Nameserver>().ToList().Where(n =>
-            !string.IsNullOrEmpty(n.Country) && !string.IsNullOrEmpty(n.Name) &&
-            !string.IsNullOrEmpty(n.IpAddress) && n.Country == userCountry && !n.IpAddress.Contains(":"));
+            !string.IsNullOrEmpty(n.CountryCode) && !string.IsNullOrEmpty(n.Name) &&
+            !string.IsNullOrEmpty(n.IpAddress) && n.CountryCode == userCountry && !n.IpAddress.Contains(":"));
     }
 }

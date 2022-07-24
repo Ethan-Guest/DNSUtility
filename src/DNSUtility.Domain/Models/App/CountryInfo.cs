@@ -1,7 +1,11 @@
 ﻿namespace DNSUtility.Domain.AppModels;
 
+/// <summary>
+///     Store information about a
+/// </summary>
 public class CountryInfo
 {
+    // An enum containing the code for each country
     public enum CountryCodes
     {
         AF,
@@ -261,6 +265,9 @@ public class CountryInfo
         Country = country;
     }
 
+    // The language of the country
     public string Language { get; set; }
+
+    // The country getter
     public string Country { get; set; }
 }

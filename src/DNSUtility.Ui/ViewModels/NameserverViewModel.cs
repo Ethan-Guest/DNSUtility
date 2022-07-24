@@ -33,7 +33,7 @@ public class NameserverViewModel : ViewModelBase
         // Initialize nameserver properties
         IpAddress = nameserver.IpAddress;
         Name = nameserver.Name;
-        Country = nameserver.Country;
+        Country = nameserver.CountryCode;
         Dnssec = nameserver.Dnssec;
         Reliability = nameserver.Reliability;
         AveragePing = 0;

@@ -2,6 +2,9 @@
 
 namespace DNSUtility.Domain.AppModels;
 
+/// <summary>
+///     A class for managing the network adapters on the system (Windows only)
+/// </summary>
 public class NetworkAdapters
 {
     public NetworkAdapters(NetworkInterface[] networkInterfaces, NetworkInterface? activeInterface)

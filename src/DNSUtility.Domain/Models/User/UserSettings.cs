@@ -30,5 +30,8 @@ public class UserSettings
     /// </summary>
     public string Language { get; set; }
 
+    /// <summary>
+    ///     The network adapters class stored for use
+    /// </summary>
     public NetworkAdapters NetworkAdapters { get; set; }
 }
