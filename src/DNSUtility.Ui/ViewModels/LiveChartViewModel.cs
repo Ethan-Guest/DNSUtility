@@ -10,6 +10,7 @@ namespace DNSUtility.Ui.ViewModels;
 
 public class LiveChartViewModel : ViewModelBase
 {
+    // Private backing fields
     private readonly MainWindowViewModel _mainViewModel;
     private ObservableCollection<ObservableValue> _observableValues;
     private NameserverViewModel? _selectedNameserver;

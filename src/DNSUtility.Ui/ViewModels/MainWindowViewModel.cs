@@ -6,12 +6,12 @@ using DNSUtility.Service.AutoUserConfiguration;
 using DNSUtility.Service.Benchmarks;
 using DNSUtility.Service.NetworkAdapterServices.Adapters;
 using DNSUtility.Service.Parsers;
-using ReactiveUI;
 
 namespace DNSUtility.Ui.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    // Private backing fields
     private NameserverListViewModel _nameserverListViewModel;
 
     public MainWindowViewModel(IParser parser)
@@ -22,7 +22,6 @@ public class MainWindowViewModel : ViewModelBase
         // Initialize the users configuration
         InitializeUserSettings();
 
-        // TODO handle usersettings null
         // Initialize settings panel
         if (UserSettings != null)
         {
@@ -32,23 +31,17 @@ public class MainWindowViewModel : ViewModelBase
         // Create the nameserver list viewmodel
         InitializeNameserverList();
 
+        // Create the live chart view model
         InitializeLiveChart();
     }
 
+    // Properties
+    //
+    // The parser to be used in nameserver list creation
     public IParser NameserverParser { get; set; }
 
     // The users settings
     public UserSettings UserSettings { get; set; }
-
-    // The users network adapters
-    /*public NetworkAdapters NetworkAdapters { get; set; }*/
-
-    // The nameserver list view model
-    public NameserverListViewModel NameserverListViewModel
-    {
-        get => _nameserverListViewModel;
-        set => this.RaiseAndSetIfChanged(ref _nameserverListViewModel, value);
-    }
 
     // The settings panel view model
     public SettingsPanelViewModel SettingsPanelViewModel { get; }
@@ -56,13 +49,22 @@ public class MainWindowViewModel : ViewModelBase
     // The ping graph view model
     public LiveChartViewModel LiveChartViewModel { get; set; }
 
+    // The nameserver list view model
+    public NameserverListViewModel NameserverListViewModel { get; set; }
+
+
+    // Methods
+    //
+    // Initialize the live chart
     private void InitializeLiveChart()
     {
         LiveChartViewModel = new LiveChartViewModel(this);
     }
 
+    // Initialize the nameserver list
     public void InitializeNameserverList()
     {
+        // Parse the public list of nameservers from the users country TODO: Parse a default nameserver if user country is null
         NameserverListViewModel = new NameserverListViewModel(this,
             NameserverParser.Parse("https://public-dns.info/nameservers.csv", UserSettings.Country).ToList(),
             new StandardPingBenchmark(), UserSettings);
@@ -71,11 +73,17 @@ public class MainWindowViewModel : ViewModelBase
     // Initialize the users system info. (Country, language) TODO: Add test to check behavior when country / language is null
     private void InitializeUserSettings()
     {
+        // Get country info
         var countryInfo = new UserCountryCode();
-        var activeInterface = new LoadNetworkInterfaces();
+
+        // Load the network interfaces
+        var networkInterfaceParser = new LoadNetworkInterfaces();
+
+        // Get all network interfaces
         var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
 
+        // apply the collected information to the user settings class
         UserSettings = new UserSettings(countryInfo.GetCountryCode(), networkInterfaces,
-            activeInterface.GetActiveNetworkInterface(networkInterfaces));
+            networkInterfaceParser.GetActiveNetworkInterface(networkInterfaces));
     }
 }
